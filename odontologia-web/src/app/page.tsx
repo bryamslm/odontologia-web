@@ -237,7 +237,7 @@ export default function Home() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <div className="text-rose-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
-                "Nunca había tenido una experiencia dental tan reconfortante. La Dra. Karen no solo fue extremadamente profesional, sino también muy empática. Me explicó cada paso del tratamiento de blanqueamiento, lo que me ayudó a sentirme completamente tranquila y segura."
+              &quot;Nunca había tenido una experiencia dental tan reconfortante. La Dra. Karen no solo fue extremadamente profesional, sino también muy empática. Me explicó cada paso del tratamiento de blanqueamiento, lo que me ayudó a sentirme completamente tranquila y segura.&quot;
               </p>
               <p className="font-medium text-black">Laura Rodríguez</p>
               <p className="text-sm text-gray-500">Tratamiento de Blanqueamiento</p>
@@ -246,7 +246,7 @@ export default function Home() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <div className="text-rose-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
-                "Como alguien con miedo al dentista, encontrar a la Dra. Vargas fue un verdadero alivio. Su enfoque suave y profesional me ayudó a superar mi ansiedad. El tratamiento de ortodoncia preventiva que me realizó fue completamente indoloro y los resultados son increíbles."
+              &quot;Como alguien con miedo al dentista, encontrar a la Dra. Vargas fue un verdadero alivio. Su enfoque suave y profesional me ayudó a superar mi ansiedad. El tratamiento de ortodoncia preventiva que me realizó fue completamente indoloro y los resultados son increíbles.&quot;
               </p>
               <p className="font-medium text-black">Ana Martínez</p>
               <p className="text-sm text-gray-500">Ortodoncia Preventiva</p>
@@ -255,7 +255,7 @@ export default function Home() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <div className="text-rose-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
-                "Llegué con un problema de caries que me preocupaba mucho. La Dra. Karen no solo trató el problema de manera eficiente, sino que me educó sobre prevención dental. Su atención detallada y el seguimiento posterior me hicieron sentir completamente respaldada en mi cuidado dental."
+              &quot;Llegué con un problema de caries que me preocupaba mucho. La Dra. Karen no solo trató el problema de manera eficiente, sino que me educó sobre prevención dental. Su atención detallada y el seguimiento posterior me hicieron sentir completamente respaldada en mi cuidado dental.&quot;
               </p>
               <p className="font-medium text-black">Sofía Guzmán</p>
               <p className="text-sm text-gray-500">Tratamiento de Caries</p>

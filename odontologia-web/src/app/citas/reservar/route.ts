@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
         );
     }
     return NextResponse.json({ message: "Cita reservada con éxito", data });
-  } catch (err: Error | any) {
-    return NextResponse.json({ error: "Error en el servidor " + err?.message?.toString() }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: "Error en el servidor " + err }, { status: 500 });
   }
 }
