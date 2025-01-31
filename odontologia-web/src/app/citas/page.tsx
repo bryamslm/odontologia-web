@@ -49,6 +49,7 @@ const AppointmentTypeCard = memo(({ type, selected, onClick }: {
     <p className="text-sm text-gray-600">{type.price}</p>
   </div>
 ));
+AppointmentTypeCard.displayName = 'AppointmentTypeCard';
 
 const TimeSlotButton = memo(({ time, selected, onClick }: {
   time: string;
@@ -64,6 +65,7 @@ const TimeSlotButton = memo(({ time, selected, onClick }: {
     {time}
   </button>
 ));
+TimeSlotButton.displayName = 'TimeSlotButton';
 
 const Footer = memo(() => (
   <footer className="bg-gray-900 text-white py-12">
@@ -106,6 +108,8 @@ const Footer = memo(() => (
   </footer>
 ));
 
+Footer.displayName = 'Footer';
+
 const WhatsAppButton = memo(() => (
   <Link
     href="https://wa.me/50662633553"
@@ -119,6 +123,7 @@ const WhatsAppButton = memo(() => (
     </svg>
   </Link>
 ));
+WhatsAppButton.displayName = 'WhatsAppButton';
 
 function CitasPage() {
   const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -166,7 +171,7 @@ function CitasPage() {
         toast.error('Error al reservar', { description: result.error || 'No se pudo completar la reserva' });
       }
     } catch (error) {
-      toast.error('Error de conexión', { description: 'No se pudo conectar con el servidor' });
+      toast.error('Error de conexión', { description: 'No se pudo conectar con el servidor' + error});
     }
   }, [formData, selectedType, selectedDate, selectedTime, resetForm]);
 
