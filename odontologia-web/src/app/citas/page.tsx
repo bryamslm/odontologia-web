@@ -135,11 +135,6 @@ function CitasPage() {
     setFormData({ nombre: '', correo: '', telefono: '' });
   }, []);
 
-  const scrollToSection = useCallback((sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, []);
-
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -351,7 +346,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, resetForm }: {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8 h-15">
-              {["Inicio", "Reservar"].map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <Link
                   key={item}
                   href={item === "Inicio" ? "/" : `#${item.toLowerCase()}`}
