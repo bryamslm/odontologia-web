@@ -399,5 +399,6 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, resetForm }: {
         </div>
   </header>
 ));
+Header.displayName = 'Header';
 
 export default CitasPage;
