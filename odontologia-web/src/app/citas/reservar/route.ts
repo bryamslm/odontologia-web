@@ -27,18 +27,18 @@ export async function POST(req: NextRequest) {
     }
     if (!error) {
         // Notificar al paciente
-        // await sendMail(
-        //   correo,
-        //   "Confirmación de Cita",
-        //   `Hola ${nombre}, tu cita se ha reservado para el día ${fecha} a las ${hora}.`
-        // );
+        await sendMail(
+          correo,
+          "Confirmación de Cita",
+          `Hola ${nombre}, tu cita se ha reservado para el día ${fecha} a las ${hora}.`
+        );
       
-        // Notificar a la doctora
-        // await sendMail(
-        //   "bryam.steven.lopez@gmail.com",
-        //   "Nueva Cita Reservada",
-        //   `Nueva cita con ${nombre} el ${fecha} a las ${hora}.`
-        // );
+        //Notificar a la doctora
+        await sendMail(
+          "bryam.steven.lopez@gmail.com",
+          "Nueva Cita Reservada",
+          `Nueva cita con ${nombre} el ${fecha} a las ${hora}.`
+        );
     }
     return NextResponse.json({ message: "Cita reservada con éxito", data });
   } catch (err: any) {

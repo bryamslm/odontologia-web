@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Menu, X, Calendar, Phone, MapPin, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Menu, X, Instagram, Facebook, Twitter } from 'lucide-react';//Calendar, Phone, MapPin
 
 const APPOINTMENT_TYPES = [
   {
