@@ -21,7 +21,6 @@ export async function POST(req: NextRequest) {
     ]);
 
     if (error) {
-      console.error(error);
       
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
@@ -41,8 +40,7 @@ export async function POST(req: NextRequest) {
         );
     }
     return NextResponse.json({ message: "Cita reservada con éxito", data });
-  } catch (err: any) {
-    console.error(err);
-    return NextResponse.json({ error: "Error en el servidor" }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: "Error en el servidor " + err }, { status: 500 });
   }
 }
