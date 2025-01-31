@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Calendar, Phone, MapPin, Clock, Send, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Menu, X, Phone, MapPin, Clock, Instagram, Facebook, Twitter } from 'lucide-react';//Calendar, Send
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

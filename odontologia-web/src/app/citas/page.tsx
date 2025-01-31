@@ -5,6 +5,7 @@ import { Toaster, toast } from 'sonner';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Menu, X, Instagram, Facebook, Twitter } from 'lucide-react';//Calendar, Phone, MapPin
+import Error from 'next/error';
 
 const APPOINTMENT_TYPES = [
   {
@@ -103,9 +104,9 @@ export default function CitasPage() {
           description: result.error || 'No se pudo completar la reserva',
         });
       }
-    } catch (error) {
+    } catch (error: Error | any) {
       toast.error('Error de conexión', {
-        description: 'No se pudo conectar con el servidor',
+        description: 'No se pudo conectar con el servidor: ' + error?.message?.toString(),
       });
     }
   };
