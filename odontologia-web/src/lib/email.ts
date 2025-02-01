@@ -1,13 +1,14 @@
 import sgMail from "@sendgrid/mail";
+import { html } from "framer-motion/client";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
-export async function sendMail(to: string, subject: string, text: string) {
+export async function sendMail(to: string, subject: string, htmlContent: string) {
   const msg = {
     to,
     from: "bryamlopezmirandamirandalopez@gmail.com", // Debe ser validado en SendGrid
     subject,
-    text,
+    html: htmlContent,
   };
-  await sgMail.send(msg);
+  await sgMail.send(msg)
 }
