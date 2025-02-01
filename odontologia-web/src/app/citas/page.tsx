@@ -386,7 +386,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, resetForm }: {
                 {["Inicio", "Sobre nosotros", "Servicios", "Reserva", "Contacto"].map((item) => (
                   <Link
                     key={item}
-                    href={item === "Reserva" ? "/citas" : `#${item.toLowerCase()}`}
+                    href={item === "Reserva" ? "/citas" : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
                     className="block py-2 text-gray-700 hover:text-rose-500"
                     onClick={() => setIsMenuOpen(false)}
                   >
