@@ -87,8 +87,6 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }:
                   className="block py-2 text-gray-700 hover:text-rose-500"
                   onClick={() => {
                     setIsMenuOpen(false);
-                    var ruta = item.toLowerCase().replace(/\s+/g, '-');
-                    console.log("ruta: ",ruta);
                     scrollToSection(item.toLowerCase().replace(/\s+/g, '-'));
                   }}
                   prefetch={false}
