@@ -18,9 +18,62 @@ const SocialIcons = {
 
 // Datos estáticos
 const APPOINTMENT_TYPES = [
-  { id: 'limpieza', name: 'Limpieza Dental', description: 'Limpieza profunda y pulido profesional', icon: '/clean.png', price: '₡ 30000' },
-  { id: 'extraccion', name: 'Extracción Dental', description: 'Procedimiento de extracción seguro y cuidadoso', icon: '/extraction.png', price: '₡ 50000' },
-  { id: 'revision', name: 'Revisión General', description: 'Chequeo completo de salud dental', icon: '/evaluacion.png', price: '₡ 15000' }
+  {
+    id: 'limpieza',
+    name: 'Limpieza Dental Profesional',
+    description: 'Remoción de placa y sarro con tecnología ultrasónica',
+    icon: <div className="text-2xl mx-auto">🦷</div>, // Diente
+    price: '₡ 25 000'
+  },
+  {
+    id: 'ortodoncia-inicial',
+    name: 'Evaluación de Ortodoncia',
+    description: 'Diagnóstico y plan de tratamiento personalizado',
+    icon: <div className="text-2xl mx-auto">🦿</div>, // Brackets (alternativa)
+    price: '₡ 35 000'
+  },
+  {
+    id: 'control-ortodoncia',
+    name: 'Control de Ortodoncia',
+    description: 'Ajuste mensual de brackets o alineadores',
+    icon: <div className="text-2xl mx-auto">🦷</div>, // Diente
+    price: '₡ 20 000'
+  },
+  {
+    id: 'extraccion',
+    name: 'Extracciones Dentales',
+    description: 'Procedimiento seguro con sedación local',
+    icon: <div className="text-2xl mx-auto">🪛</div>, // Extracción (alternativa)
+    price: '₡ 40 000 - ₡ 75 000'
+  },
+  {
+    id: 'caries',
+    name: 'Tratamiento de Caries',
+    description: 'Restauraciones en composite o amalgama',
+    icon: <div className="text-2xl mx-auto">🔧</div>, // Reparación
+    price: '₡ 35 000 - ₡ 55 000'
+  },
+  {
+    id: 'protesis',
+    name: 'Prótesis Dentales',
+    description: 'Coronas, puentes y prótesis removibles',
+    icon: <div className="text-2xl mx-auto">👑</div>, // Corona
+    price: '₡ 85 000'
+  },
+  {
+    id: 'blanqueamiento',
+    name: 'Blanqueo Dental',
+    description: 'Tratamiento estético profesional en consultorio',
+    icon: <div className="text-2xl mx-auto">✨</div>, // Brillo
+    price: '₡ 60 000'
+  },
+  {
+    id: 'urgencias',
+    name: 'Urgencias Dentales',
+    description: 'Atención inmediata para casos de emergencia',
+    icon: <div className="text-2xl mx-auto">🚨</div>, // Alerta
+    price: '₡ 45 000'
+  }
 ];
 
 const AVAILABLE_TIMES = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
@@ -34,17 +87,10 @@ const AppointmentTypeCard = memo(({ type, selected, onClick }: {
 }) => (
   <div
     onClick={onClick}
-    className={`border-2 rounded-xl p-4 text-center cursor-pointer transition-all duration-300 ease-in-out ${selected ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-300' : 'border-gray-200 hover:border-blue-300'
+    className={`border-2 rounded-xl p-6 text-center cursor-pointer transition-all duration-300 ease-in-out ${selected ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-300' : 'border-gray-200 hover:border-blue-300'
       }`}
   >
-    <Image
-      src={type.icon}
-      alt={type.name}
-      width={50}
-      height={50}
-      className="mx-auto mb-3"
-      loading="lazy"
-    />
+    {type.icon}
     <h4 className="font-bold text-gray-800">{type.name}</h4>
     <p className="text-sm text-gray-600">{type.price}</p>
   </div>
@@ -59,7 +105,7 @@ const TimeSlotButton = memo(({ time, selected, onClick }: {
   <button
     type="button"
     onClick={onClick}
-    className={`p-2 rounded-lg border-2 text-sm text-black ${selected ? 'bg-blue-500 text-white border-blue-500' : 'border-gray-200 hover:bg-blue-50'
+    className={`p-2 rounded-lg border-2 text-sm text-black ${selected ? 'bg-blue-50 text-black border-blue-500 ' : 'border-gray-200 hover:bg-blue-50'
       }`}
   >
     {time}
@@ -140,6 +186,18 @@ function CitasPage() {
     setFormData({ nombre: '', correo: '', telefono: '' });
   }, []);
 
+  const scrollToSection = useCallback((sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    element?.scrollIntoView({ behavior: 'smooth', block: 'center'});
+  }, []);
+
+  const scrollAfterTypeSelection = useCallback((id: string) => {
+    //wait 1 second for scroll to dateForm id
+    setTimeout(() => {
+      scrollToSection(id);
+    }, 500);
+  }, [selectedType, scrollToSection]);
+
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -171,7 +229,7 @@ function CitasPage() {
         toast.error('Error al reservar', { description: result.error || 'No se pudo completar la reserva' });
       }
     } catch (error) {
-      toast.error('Error de conexión', { description: 'No se pudo conectar con el servidor' + error});
+      toast.error('Error de conexión', { description: 'No se pudo conectar con el servidor' + error });
     }
   }, [formData, selectedType, selectedDate, selectedTime, resetForm]);
 
@@ -180,6 +238,8 @@ function CitasPage() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+
 
   return (
     <main className="bg-gradient-to-b from-rose-50 to-white min-h-screen">
@@ -226,21 +286,32 @@ function CitasPage() {
                     <AppointmentTypeCard
                       key={type.id}
                       type={type}
+                      className="bg-blue-50 p-6 rounded-xl hover:shadow-lg border-2 border-blue-100"
                       selected={selectedType === type.id}
-                      onClick={() => setSelectedType(type.id)}
+                      onClick={() => {
+                        setSelectedType(type.id);
+                        scrollAfterTypeSelection("dateForm");
+                      }}
                     />
                   ))}
                 </div>
               </div>
 
               {selectedType && (
-                <div className="space-y-4">
+
+                <motion.div
+                  className="space-y-4"
+                  id='dateForm'
+                  initial={{ opacity: 0, y: -100 }}
+                  animate={{ opacity: 1, y: 0 }}
+
+                >
                   <div>
                     <label className="block text-gray-700 mb-2">Fecha de la Cita</label>
                     <input
                       type="date"
                       value={selectedDate || ''}
-                      onChange={(e) => setSelectedDate(e.target.value)}
+                      onChange={(e) => { setSelectedDate(e.target.value) }}
                       className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
                       min={new Date().toISOString().split('T')[0]}
                       required
@@ -248,71 +319,90 @@ function CitasPage() {
                   </div>
 
                   {selectedDate && (
-                    <div>
-                      <label className="block text-gray-700 mb-2">Hora Disponible</label>
-                      <div className="grid grid-cols-4 gap-2">
-                        {AVAILABLE_TIMES.map((time) => (
-                          <TimeSlotButton
-                            key={time}
-                            time={time}
-                            selected={selectedTime === time}
-                            onClick={() => setSelectedTime(time)}
-                          />
-                        ))}
+                    <motion.div
+                      className="space-y-4"
+                      id='timeForm'
+                      initial={{ opacity: 0, y: -100 }}
+                      animate={{ opacity: 1, y: 0 }}
+
+                    >
+                      <div>
+                        <label className="block text-gray-700 mb-2">Hora Disponible</label>
+                        <div className="grid grid-cols-4 gap-2">
+                          {AVAILABLE_TIMES.map((time) => (
+                            <TimeSlotButton
+                              key={time}
+                              time={time}
+                              selected={selectedTime === time}
+                              onClick={() => {
+                                setSelectedTime(time);
+                                scrollAfterTypeSelection("personalInfo");
+                              }
+                              }
+                            />
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    </motion.div>
                   )}
-                </div>
+                </motion.div>
               )}
 
               {/* Información Personal */}
               {selectedType && selectedDate && selectedTime && (
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-gray-700 mb-2">
-                      Nombre Completo
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.nombre}
-                      onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                      className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-gray-700 mb-2">
-                      Correo Electrónico
-                    </label>
-                    <input
-                      type="email"
-                      value={formData.correo}
-                      onChange={(e) => setFormData({ ...formData, correo: e.target.value })}
-                      className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-gray-700 mb-2">
-                      Teléfono
-                    </label>
-                    <input
-                      type="tel"
-                      value={formData.telefono}
-                      onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-                      className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
-                    />
-                  </div>
+                <motion.div
+                  className="space-y-4"
+                  id="personalInfo"
+                  initial={{ opacity: 0, y: -100 }}
+                  animate={{ opacity: 1, y: 0 }}
 
-                  <button
-                    type="submit"
-                    className="w-full bg-blue-600 text-white py-3 rounded-lg 
-                    hover:bg-blue-700 transition-colors duration-300 
-                    font-semibold shadow-md"
-                  >
-                    Confirmar Reserva
-                  </button>
-                </div>
+                >
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-gray-700 mb-2">
+                        Nombre Completo
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.nombre}
+                        onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-gray-700 mb-2">
+                        Correo Electrónico
+                      </label>
+                      <input
+                        type="email"
+                        value={formData.correo}
+                        onChange={(e) => setFormData({ ...formData, correo: e.target.value })}
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-gray-700 mb-2">
+                        Teléfono
+                      </label>
+                      <input
+                        type="tel"
+                        value={formData.telefono}
+                        onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="bg-rose-500 text-white px-8 py-3 rounded-full 
+                    hover:bg-rose-600 transition-colors shadow-lg"
+                    >
+                      Confirmar Reserva
+                    </button>
+                  </div>
+                </motion.div>
               )}
 
             </form>
@@ -333,70 +423,70 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, resetForm }: {
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<boolean>;
   resetForm: () => void;
-  
+
 }) => (
   <header className={`fixed w-full transition-all duration-300 z-40 ${isScrolled ? 'bg-white/95 shadow-md' : 'bg-transparent'
     }`}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+      <div className="flex justify-between items-center h-20">
 
+        <Link
+          key={"Clínica Keis"}
+          className="div h-15 text-rose-500 font-bold text-2xl cursor-pointer"
+          href={"/"}
+
+        >
+          Clínica Keis
+        </Link>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex space-x-8 h-15">
+          {NAV_ITEMS.map((item) => (
             <Link
-              key={"Clínica Keis"}
-              className="div h-15 text-rose-500 font-bold text-2xl cursor-pointer"
-              href={"/"}
+              key={item}
+              href={item === "Inicio" ? "/" : `#${item.toLowerCase()}`}
+              className="text-gray-700 hover:text-rose-500 transition-colors font-medium cursor-pointer"
+              onClick={(e) => {
+                if (item === "Inicio") return;
+                e.preventDefault();
+                if (item === "Reservar") {
+                  resetForm();
+                }
 
+              }}
             >
-              Clínica Keis
+              {item}
             </Link>
+          ))}
+        </nav>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8 h-15">
-              {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item}
-                  href={item === "Inicio" ? "/" : `#${item.toLowerCase()}`}
-                  className="text-gray-700 hover:text-rose-500 transition-colors font-medium cursor-pointer"
-                  onClick={(e) => {
-                    if (item === "Inicio") return;
-                    e.preventDefault();
-                    if (item === "Reservar") {
-                      resetForm();
-                    }
-                    
-                  }}
-                >
-                  {item}
-                </Link>
-              ))}
-            </nav>
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2 text-black"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-2 text-black"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white absolute top-20 left-0 w-full shadow-lg ">
+          <div className="px-4 py-2 space-y-2">
+            {["Inicio", "Sobre nosotros", "Servicios", "Reserva", "Contacto"].map((item) => (
+              <Link
+                key={item}
+                href={item === "Reserva" ? "/citas" : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
+                className="block py-2 text-gray-700 hover:text-rose-500"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item}
+              </Link>
+            ))}
           </div>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden bg-white absolute top-20 left-0 w-full shadow-lg ">
-              <div className="px-4 py-2 space-y-2">
-                {["Inicio", "Sobre nosotros", "Servicios", "Reserva", "Contacto"].map((item) => (
-                  <Link
-                    key={item}
-                    href={item === "Reserva" ? "/citas" : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="block py-2 text-gray-700 hover:text-rose-500"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
+      )}
+    </div>
   </header>
 ));
 Header.displayName = 'Header';

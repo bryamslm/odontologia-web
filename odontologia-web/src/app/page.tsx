@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 // Carga diferida de iconos no críticos
@@ -16,11 +17,41 @@ const Twitter = dynamic(() => import('lucide-react').then(mod => mod.Twitter), {
 
 // Datos estáticos fuera del componente
 const SERVICES = [
-  { title: "Limpieza Dental Profesional", description: "Mantén tu sonrisa radiante y saludable", icon: "✨" },
-  { title: "Blanqueamiento Dental", description: "Recupera el brillo natural de tus dientes", icon: "💫" },
-  { title: "Ortodoncia Preventiva", description: "Tratamientos personalizados para cada paciente", icon: "🦷" },
-  { title: "Tratamiento de Caries", description: "Restauraciones estéticas y duraderas", icon: "🌟" },
-  { title: "Extracciones", description: "Procedimientos seguros y sin dolor", icon: "⭐" }
+  {
+    title: "Limpieza Dental Profesional",
+    description: "Mantén tu sonrisa radiante y saludable",
+    icon: "🦷", // Emoji de diente
+  },
+  {
+    title: "Blanqueamiento Dental",
+    description: "Recupera el brillo natural de tus dientes",
+    icon: "✨", // Emoji de brillo
+  },
+  {
+    title: "Ortodoncia Preventiva",
+    description: "Tratamientos personalizados para cada paciente",
+    icon: "🦿", // Emoji de brackets (alternativa)
+  },
+  {
+    title: "Tratamiento de Caries",
+    description: "Restauraciones estéticas y duraderas",
+    icon: "🔧", // Emoji de herramienta (representa reparación)
+  },
+  {
+    title: "Extracciones Dentales",
+    description: "Procedimientos seguros y sin dolor",
+    icon: "🪛", // Emoji de extracción (alternativa)
+  },
+  {
+    title: "Prótesis Dentales",
+    description: "Coronas, puentes y prótesis removibles",
+    icon: "👑", // Emoji de corona
+  },
+  {
+    title: "Urgencias Dentales",
+    description: "Atención inmediata para casos de emergencia",
+    icon: "🚨", // Emoji de alerta
+  },
 ];
 
 const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }: {
@@ -30,7 +61,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }:
   scrollToSection: (sectionId: string) => void;
 }) => {
   const navItems = ["Inicio", "Sobre nosotros", "Servicios", "Reserva", "Contacto"];
-  
+
   return (
     <header className={`fixed w-full transition-all duration-300 z-50 ${isScrolled ? 'bg-white/95 shadow-md' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,7 +95,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }:
                 {item}
               </Link>
               //scroll suave
-            
+
             ))}
           </nav>
 
@@ -208,49 +239,59 @@ export default function Home() {
 
       {/* Sección Hero */}
       <section id="inicio" className="pt-32 pb-16 px-4">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-              Tu sonrisa merece la mejor atención
-            </h1>
-            <p className="text-lg text-gray-600 mb-8">
-              Con la Dra. Karen Dayana Vargas Cortés, tu salud dental está en las mejores manos.
-              Experimenta una atención personalizada y resultados excepcionales.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <Link 
-                href="/citas" 
-                className="bg-rose-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-colors shadow-lg"
-                prefetch={false}
-              >
-                Reservar Cita
-              </Link>
-              <button 
-                onClick={() => scrollToSection('sobre-nosotros')} 
-                className="bg-white text-rose-500 px-8 py-3 rounded-full border-2 border-rose-500 hover:bg-rose-50 transition-colors"
-                aria-label="Conoce más"
-              >
-                Conoce más
-              </button>
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="sticky top-20 h-fit z-10 self-start"
+        >
+          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+            <div className="text-center md:text-left">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                Tu sonrisa merece la mejor atención
+              </h1>
+              <p className="text-lg text-gray-600 mb-8">
+                Con la Dra. Karen Vargas Cortés, tu salud dental está en las mejores manos.
+                Experimenta una atención personalizada y resultados excepcionales.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <Link
+                  href="/citas"
+                  className="bg-rose-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-colors shadow-lg"
+                  prefetch={false}
+                >
+                  Reservar Cita
+                </Link>
+                <button
+                  onClick={() => scrollToSection('sobre-nosotros')}
+                  className="bg-white text-blue-500 px-8 py-3 rounded-full border-2 border-blue-500 hover:bg-rose-50 transition-colors"
+                  aria-label="Conoce más"
+                >
+                  Conoce más
+                </button>
+              </div>
             </div>
+            <div className="hidden md:block relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
+              <Image
+                src="/doc-3.png"
+                alt="Dra. Karen Dayana Vargas"
+                className="w-full h-full object-contain rounded-2xl shadow-xl"
+                width={500}
+                height={500}
+                priority
+                quality={85}
+                fetchPriority="high"
+                sizes="(max-width: 768px) 100vw, 50vw" // <- Y esto
+              />
+            </div>
+
           </div>
-          <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
-            <Image
-              src="/doc-3.png"
-              alt="Dra. Karen Dayana Vargas"
-              className="w-full h-full object-contain rounded-2xl shadow-xl"
-              width={500}
-              height={500}
-              priority
-              quality={85}
-              fetchPriority="high"
-              sizes="(max-width: 768px) 100vw, 50vw" // <- Y esto
-            />
-          </div>
-        </div>
+        </motion.div>
       </section>
 
       <section id="sobre-nosotros" className="py-20 px-4 bg-gradient-to-b from-white to-rose-50">
+        
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -259,37 +300,37 @@ export default function Home() {
               </h2>
               <div className="prose prose-lg text-gray-600">
                 <p>
-                  La Dra. Karen Dayana Vargas Cortés cuenta con más de 5 años de experiencia
+                  La Dra. Karen cuenta con más de 5 años de experiencia
                   en odontología general y estética. Su compromiso con la excelencia y
                   la atención personalizada la han convertido en una profesional
                   reconocida en San Carlos.
                 </p>
                 <ul className="space-y-4 mt-6">
                   <li className="flex items-start">
-                    <span className="text-rose-500 mr-2">✓</span>
+                    <span className="text-blue-500 mr-2">✓</span>
                     Especialización en tratamientos estéticos y preventivos
                   </li>
                   <li className="flex items-start">
-                    <span className="text-rose-500 mr-2">✓</span>
+                    <span className="text-blue-500 mr-2">✓</span>
                     Formación continua en las últimas técnicas odontológicas
                   </li>
                   <li className="flex items-start">
-                    <span className="text-rose-500 mr-2">✓</span>
+                    <span className="text-blue-500 mr-2">✓</span>
                     Enfoque gentil y personalizado para cada paciente
                   </li>
                 </ul>
               </div>
               <div className="flex gap-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-rose-500">+500</div>
+                  <div className="text-3xl font-bold text-blue-500">+500</div>
                   <div className="text-sm text-gray-600">Pacientes Satisfechos</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-rose-500">5</div>
+                  <div className="text-3xl font-bold text-blue-500">5</div>
                   <div className="text-sm text-gray-600">Años de Experiencia</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-rose-500">100%</div>
+                  <div className="text-3xl font-bold text-blue-500">100%</div>
                   <div className="text-sm text-gray-600">Compromiso</div>
                 </div>
               </div>
@@ -302,7 +343,7 @@ export default function Home() {
                 width={500}
                 height={500}
                 loading="lazy"
-                sizes="(max-width: 768px) 100vw, 50vw" 
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               <Image
                 src="/equipo-dental.avif"
@@ -311,7 +352,7 @@ export default function Home() {
                 width={500}
                 height={500}
                 loading="lazy"
-                sizes="(max-width: 768px) 100vw, 50vw" 
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -319,7 +360,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="servicios" className="py-16 px-4 bg-white">
+      <section id="servicios" className="py-20 px-4 bg-rose-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
             Nuestros Servicios
@@ -328,10 +369,10 @@ export default function Home() {
             {SERVICES.map((service) => (
               <div
                 key={service.title}
-                className="bg-rose-50 p-6 rounded-xl hover:shadow-lg transition-shadow"
+                className="bg-blue-200 p-6 rounded-xl hover:shadow-lg transition-shadow"
               >
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-xl text-black font-semibold mb-2">{service.title}</h3>
+                
+                <h3 className="text-xl text-black font-semibold mb-2">{service.icon}{service.title}</h3>
                 <p className="text-gray-600">{service.description}</p>
               </div>
             ))}
@@ -340,34 +381,34 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 px-4 bg-rose-50">
+      <section className="py-20 px-4 bg-rose-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
             Lo que dicen nuestras pacientes
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-sm">
-              <div className="text-rose-500 mb-4">★★★★★</div>
+              <div className="text-blue-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
-              &quot;Nunca había tenido una experiencia dental tan reconfortante. La Dra. Karen no solo fue extremadamente profesional, sino también muy empática. Me explicó cada paso del tratamiento de blanqueamiento, lo que me ayudó a sentirme completamente tranquila y segura.&quot;
+                &quot;Nunca había tenido una experiencia dental tan reconfortante. La Dra. Karen no solo fue extremadamente profesional, sino también muy empática. Me explicó cada paso del tratamiento de blanqueamiento, lo que me ayudó a sentirme completamente tranquila y segura.&quot;
               </p>
               <p className="font-medium text-black">Laura Rodríguez</p>
               <p className="text-sm text-gray-500">Tratamiento de Blanqueamiento</p>
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm">
-              <div className="text-rose-500 mb-4">★★★★★</div>
+              <div className="text-blue-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
-              &quot;Como alguien con miedo al dentista, encontrar a la Dra. Vargas fue un verdadero alivio. Su enfoque suave y profesional me ayudó a superar mi ansiedad. El tratamiento de ortodoncia preventiva que me realizó fue completamente indoloro y los resultados son increíbles.&quot;
+                &quot;Como alguien con miedo al dentista, encontrar a la Dra. Vargas fue un verdadero alivio. Su enfoque suave y profesional me ayudó a superar mi ansiedad. El tratamiento de ortodoncia preventiva que me realizó fue completamente indoloro y los resultados son increíbles.&quot;
               </p>
               <p className="font-medium text-black">Ana Martínez</p>
               <p className="text-sm text-gray-500">Ortodoncia Preventiva</p>
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm">
-              <div className="text-rose-500 mb-4">★★★★★</div>
+              <div className="text-blue-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
-              &quot;Llegué con un problema de caries que me preocupaba mucho. La Dra. Karen no solo trató el problema de manera eficiente, sino que me educó sobre prevención dental. Su atención detallada y el seguimiento posterior me hicieron sentir completamente respaldada en mi cuidado dental.&quot;
+                &quot;Llegué con un problema de caries que me preocupaba mucho. La Dra. Karen no solo trató el problema de manera eficiente, sino que me educó sobre prevención dental. Su atención detallada y el seguimiento posterior me hicieron sentir completamente respaldada en mi cuidado dental.&quot;
               </p>
               <p className="font-medium text-black">Sofía Guzmán</p>
               <p className="text-sm text-gray-500">Tratamiento de Caries</p>
@@ -377,27 +418,27 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contacto" className="py-16 px-4">
+      <section id="contacto" className="py-20 px-4">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-3xl font-bold mb-8 text-gray-800">Contáctanos</h2>
             <div className="space-y-6">
               <div className="flex items-center space-x-4">
-                <Phone className="text-rose-500" />
+                <Phone className="text-blue-500" />
                 <div>
                   <p className="font-medium text-black">Teléfono</p>
                   <p className="text-gray-600">000-0000</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <MapPin className="text-rose-500" />
+                <MapPin className="text-blue-500" />
                 <div>
                   <p className="font-medium  text-black">Dirección</p>
-                  <p className="text-gray-600">San Carlos</p>
+                  <p className="text-gray-600">San José de La Tigra, San Carlos, Alajuela, Costa Rica.</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <Clock className="text-rose-500" />
+                <Clock className="text-blue-500" />
                 <div>
                   <p className="font-medium  text-black">Horario</p>
                   <p className="text-gray-600">Lunes a Viernes: 8:00 AM - 5:00 PM</p>
