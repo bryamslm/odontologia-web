@@ -286,7 +286,6 @@ function CitasPage() {
                     <AppointmentTypeCard
                       key={type.id}
                       type={type}
-                      className="bg-blue-50 p-6 rounded-xl hover:shadow-lg border-2 border-blue-100"
                       selected={selectedType === type.id}
                       onClick={() => {
                         setSelectedType(type.id);
