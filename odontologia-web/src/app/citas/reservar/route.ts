@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
         <body>
             <div class="container">
                 <div class="header">
-                    <img src="https://ejemplo.com/logo-clinica.png" alt="Clínica Dental Keis" class="logo">
+                    <img src="https://odontologia-web.vercel.app/logo-5.svg" alt="Clínica Dental Keis" class="logo">
                 </div>
                 
                 <div class="content">
