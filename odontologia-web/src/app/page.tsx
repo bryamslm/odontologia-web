@@ -384,7 +384,7 @@ export default function Home() {
       <section className="py-20 px-4 bg-blue-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Lo que dicen nuestras pacientes
+            Lo que dicen nuestros pacientes
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
@@ -401,7 +401,7 @@ export default function Home() {
               <p className="text-gray-600 mb-4">
                 &quot;Como alguien con miedo al dentista, encontrar a la Dra. Vargas fue un verdadero alivio. Su enfoque suave y profesional me ayudó a superar mi ansiedad. El tratamiento de ortodoncia preventiva que me realizó fue completamente indoloro y los resultados son increíbles.&quot;
               </p>
-              <p className="font-medium text-black">Ana Martínez</p>
+              <p className="font-medium text-black">Rodrigo Martínez</p>
               <p className="text-sm text-gray-500">Ortodoncia Preventiva</p>
             </div>
 
