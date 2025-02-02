@@ -178,6 +178,7 @@ function CitasPage() {
   const [formData, setFormData] = useState({ nombre: '', correo: '', telefono: '' });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const resetForm = useCallback(() => {
     setSelectedType(null);
@@ -205,6 +206,7 @@ function CitasPage() {
       toast.error('Por favor complete todos los campos');
       return;
     }
+    setIsLoading(true);  // Se inicia el estado de carga
 
     try {
       const res = await fetch("/citas/reservar", {
@@ -230,6 +232,8 @@ function CitasPage() {
       }
     } catch (error) {
       toast.error('Error de conexión', { description: 'No se pudo conectar con el servidor' + error });
+    }finally{
+      setIsLoading(false);
     }
   }, [formData, selectedType, selectedDate, selectedTime, resetForm]);
 
@@ -395,10 +399,16 @@ function CitasPage() {
 
                     <button
                       type="submit"
-                      className="bg-rose-500 text-white px-8 py-3 rounded-full 
-                    hover:bg-rose-600 transition-colors shadow-lg"
+                      className={` text-white px-8 py-3 rounded-full 
+                    transition-colors shadow-lg  
+                    ${
+                      isLoading
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-rose-500 hover:bg-rose-600"
+                    }`}
+                      disabled={isLoading}
                     >
-                      Confirmar Reserva
+                      {isLoading ? 'Reservando...' : 'Confirmar Reserva'} {/* Muestra texto diferente mientras carga */}
                     </button>
                   </div>
                 </motion.div>
