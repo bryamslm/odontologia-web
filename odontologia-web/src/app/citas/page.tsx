@@ -340,7 +340,7 @@ function CitasPage() {
 
                     >
                       <div>
-                        <label className="block text-gray-700 mb-2">Hora Disponible</label>
+                        <label className="block text-gray-700 mb-2">Horas Disponible</label>
                         <div className="grid grid-cols-4 gap-2">
                           {AVAILABLE_TIMES.map((time) => {
                             const isPast = selectedDate === currentDate && time < currentTime;
