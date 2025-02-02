@@ -16,19 +16,25 @@ export async function sendWhatsAppMessage(name: string, service: string, date: s
             //mensaje profesional con los datos del paciente
             body: `📅 *Nueva Solicitud de Cita* 📅
 
-    *Servicio:* ${service}
-    *Nombre del Paciente:* ${name}
-    *Fecha Programada:* ${date} (AAAA/MM/DD)
-    *Hora Estimada:* ${time} (HH:MM)
-    
-    📧 *Contacto:*
-    Correo Electrónico: ${gmail}
-    Teléfono: ${phone}
+*Servicio:* ${service}
 
-    _Por favor confirme esta cita respondiendo:_ 
-    ✅ CONFIRMAR | ❌ RECHAZAR | 🔄 REPROGRAMAR
+*Nombre del Paciente:* 
+${name}
 
-                Gracias por usar nuestro sistema de citas automatizado.`,
+*Fecha Programada:* ${date}
+*Hora Estimada:* ${time}
+
+📧 *Contacto:*
+Correo Electrónico: 
+${gmail}
+Teléfono: ${phone}
+
+_Por favor confirme esta cita respondiendo:_ 
+✅ CONFIRMAR
+❌ RECHAZAR
+🔄 REPROGRAMAR
+
+Gracias por usar nuestro sistema de citas automatizado.`,
             to: 'whatsapp:+50662633553'
         });
 

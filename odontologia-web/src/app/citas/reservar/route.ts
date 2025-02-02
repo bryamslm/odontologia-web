@@ -20,6 +20,8 @@ export async function POST(req: NextRequest) {
                 tipo_cita: tipo,
             },
         ]);
+        //fechaFormat cambia formato de AAAA-MM-DD a DD/MM/AAAA
+        const fechaFormat = fecha.split("-").reverse().join("/");
 
         if (error) {
 
@@ -55,7 +57,7 @@ export async function POST(req: NextRequest) {
                     <table class="details">
                         <tr>
                             <td><strong>📅 Fecha:</strong></td>
-                            <td>${fecha}</td>
+                            <td>${fechaFormat}</td>
                         </tr>
                         <tr>
                             <td><strong>⏰ Hora:</strong></td>
@@ -131,7 +133,7 @@ export async function POST(req: NextRequest) {
                     </tr>
                     <tr class="highlight">
                         <td><strong>Fecha y Hora:</strong></td>
-                        <td>${fecha} a las ${hora}</td>
+                        <td>${fechaFormat} a las ${hora}</td>
                     </tr>
                     <tr>
                         <td><strong>Servicio:</strong></td>
@@ -162,18 +164,18 @@ export async function POST(req: NextRequest) {
             // Uso en el código
             await sendMail(
                 correo,
-                `✅ Confirmación de Cita: ${fecha} ${hora} - Clínica Keis`,
+                `✅ Confirmación de Cita: ${fechaFormat} ${hora} - Clínica Keis`,
                 pacienteHTML
             );
 
             await sendMail(
                 "bryam.steven.lopez@gmail.com",
-                `📅 Nueva Cita: ${nombre} - ${fecha} ${hora}`,
+                `📅 Nueva Cita: ${nombre} - ${fechaFormat} ${hora}`,
                 doctoraHTML
             );
 
             // Enviar mensaje de WhatsApp
-            const res = await sendWhatsAppMessage(nombre, tipo, fecha, hora, correo, telefono);
+            const res = await sendWhatsAppMessage(nombre, tipo, fechaFormat, hora, correo, telefono);
             console.log("Mensaje de WhatsApp enviado?: ", res);
         }
         return NextResponse.json({ message: "Cita reservada con éxito", data });
