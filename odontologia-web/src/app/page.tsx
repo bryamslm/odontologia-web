@@ -67,7 +67,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }:
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div
-            className="h-15 text-rose-500 font-bold text-2xl cursor-pointer"
+            className="h-15 text-blue-500 font-bold text-2xl cursor-pointer"
             onClick={() => scrollToSection('inicio')}
             role="button"
             tabIndex={0}
@@ -80,7 +80,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }:
               <Link
                 key={item}
                 href={item === "Reserva" ? "/citas" : `#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                className="text-gray-700 hover:text-rose-500 transition-colors font-medium"
+                className="text-gray-700 hover:text-blue-500 transition-colors font-medium"
                 onClick={(e) => {
                   if (item === "Reserva") {
                     return; // Allow default link behavior for Reserva
@@ -115,7 +115,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }:
                 <Link
                   key={item}
                   href={item === "Reserva" ? "/citas" : `#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                  className="block py-2 text-gray-700 hover:text-rose-500"
+                  className="block py-2 text-gray-700 hover:text-blue-500"
                   onClick={() => {
                     setIsMenuOpen(false);
                     scrollToSection(item.toLowerCase().replace(/\s+/g, '-'));
@@ -151,7 +151,7 @@ const Footer = memo(() => (
               <Link
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="block text-gray-400 hover:text-rose-400"
+                className="block text-gray-400 hover:text-blue-400"
                 prefetch={false}
               >
                 {item}
@@ -166,7 +166,7 @@ const Footer = memo(() => (
               <Link
                 key={index}
                 href="#"
-                className="text-gray-400 hover:text-rose-400"
+                className="text-gray-400 hover:text-blue-400"
                 aria-label={`Red social ${index}`}
               >
                 <Icon size={24} />
@@ -234,7 +234,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-gradient-to-b from-rose-50 to-white min-h-screen">
+    <main className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
       <Header {...{ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }} />
 
       {/* Sección Hero */}
@@ -258,14 +258,14 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link
                   href="/citas"
-                  className="bg-rose-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-colors shadow-lg"
+                  className="bg-blue-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-colors shadow-lg"
                   prefetch={false}
                 >
                   Reservar Cita
                 </Link>
                 <button
                   onClick={() => scrollToSection('sobre-nosotros')}
-                  className="bg-white text-blue-500 px-8 py-3 rounded-full border-2 border-blue-500 hover:bg-rose-50 transition-colors"
+                  className="bg-white text-rose-400 px-8 py-3 rounded-full border-2 border-rose-400 hover:bg-rose-50 transition-colors"
                   aria-label="Conoce más"
                 >
                   Conoce más
@@ -290,7 +290,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section id="sobre-nosotros" className="py-20 px-4 bg-gradient-to-b from-white to-rose-50">
+      <section id="sobre-nosotros" className="py-20 px-4 bg-gradient-to-b from-white to-blue-50">
         
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -360,7 +360,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="servicios" className="py-20 px-4 bg-rose-50">
+      <section id="servicios" className="py-20 px-4 bg-blue-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
             Nuestros Servicios
@@ -369,7 +369,7 @@ export default function Home() {
             {SERVICES.map((service) => (
               <div
                 key={service.title}
-                className="bg-blue-200 p-6 rounded-xl hover:shadow-lg transition-shadow"
+                className="bg-blue-100 p-6 rounded-xl hover:shadow-lg transition-shadow"
               >
                 
                 <h3 className="text-xl text-black font-semibold mb-2">{service.icon}{service.title}</h3>
@@ -381,13 +381,13 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 bg-rose-50">
+      <section className="py-20 px-4 bg-blue-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
             Lo que dicen nuestras pacientes
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
               <div className="text-blue-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
                 &quot;Nunca había tenido una experiencia dental tan reconfortante. La Dra. Karen no solo fue extremadamente profesional, sino también muy empática. Me explicó cada paso del tratamiento de blanqueamiento, lo que me ayudó a sentirme completamente tranquila y segura.&quot;
@@ -396,7 +396,7 @@ export default function Home() {
               <p className="text-sm text-gray-500">Tratamiento de Blanqueamiento</p>
             </div>
 
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
               <div className="text-blue-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
                 &quot;Como alguien con miedo al dentista, encontrar a la Dra. Vargas fue un verdadero alivio. Su enfoque suave y profesional me ayudó a superar mi ansiedad. El tratamiento de ortodoncia preventiva que me realizó fue completamente indoloro y los resultados son increíbles.&quot;
@@ -405,7 +405,7 @@ export default function Home() {
               <p className="text-sm text-gray-500">Ortodoncia Preventiva</p>
             </div>
 
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
               <div className="text-blue-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
                 &quot;Llegué con un problema de caries que me preocupaba mucho. La Dra. Karen no solo trató el problema de manera eficiente, sino que me educó sobre prevención dental. Su atención detallada y el seguimiento posterior me hicieron sentir completamente respaldada en mi cuidado dental.&quot;

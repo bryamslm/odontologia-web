@@ -76,8 +76,8 @@ const APPOINTMENT_TYPES = [
   }
 ];
 
-const AVAILABLE_TIMES = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
-const NAV_ITEMS = ["Inicio", "Reservar"];
+const AVAILABLE_TIMES = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+const NAV_ITEMS = ["Inicio", "Sobre nosotros", "Servicios", "Reserva", "Contacto"];
 
 // Componentes memoizados
 const AppointmentTypeCard = memo(({ type, selected, onClick }: {
@@ -97,16 +97,18 @@ const AppointmentTypeCard = memo(({ type, selected, onClick }: {
 ));
 AppointmentTypeCard.displayName = 'AppointmentTypeCard';
 
-const TimeSlotButton = memo(({ time, selected, onClick }: {
+const TimeSlotButton = memo(({ time, selected, disabled, onClick }: {
   time: string;
   selected: boolean;
+  disabled: boolean;
   onClick: () => void;
 }) => (
   <button
     type="button"
     onClick={onClick}
+    disabled={disabled}
     className={`p-2 rounded-lg border-2 text-sm text-black ${selected ? 'bg-blue-50 text-black border-blue-500 ' : 'border-gray-200 hover:bg-blue-50'
-      }`}
+      } ${disabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-blue-100'}`}
   >
     {time}
   </button>
@@ -128,7 +130,7 @@ const Footer = memo(() => (
               <Link
                 key={item}
                 href={`/#${item.toLowerCase().replace(' ', '-')}`}
-                className="block text-gray-400 hover:text-rose-400"
+                className="block text-gray-400 hover:text-blue-400"
                 prefetch={false}
               >
                 {item}
@@ -140,7 +142,7 @@ const Footer = memo(() => (
           <h3 className="text-lg font-semibold mb-4">Síguenos</h3>
           <div className="flex space-x-4">
             {Object.entries(SocialIcons).map(([name, Icon]) => (
-              <Link key={name} href="#" className="text-gray-400 hover:text-rose-400">
+              <Link key={name} href="#" className="text-gray-400 hover:text-blue-400">
                 <Icon size={24} />
               </Link>
             ))}
@@ -179,6 +181,8 @@ function CitasPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentTime, setCurrentTime] = useState('');
+  const [currentDate, setCurrentDate] = useState("");
 
   const resetForm = useCallback(() => {
     setSelectedType(null);
@@ -189,7 +193,7 @@ function CitasPage() {
 
   const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'center'});
+    element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, []);
 
   const scrollAfterTypeSelection = useCallback((id: string) => {
@@ -232,7 +236,7 @@ function CitasPage() {
       }
     } catch (error) {
       toast.error('Error de conexión', { description: 'No se pudo conectar con el servidor' + error });
-    }finally{
+    } finally {
       setIsLoading(false);
     }
   }, [formData, selectedType, selectedDate, selectedTime, resetForm]);
@@ -240,13 +244,19 @@ function CitasPage() {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
     window.addEventListener('scroll', handleScroll, { passive: true });
+    const now = new Date();
+    const formattedTime = now.toLocaleTimeString('es-CR', { hour: '2-digit', minute: '2-digit', hour12: false });
+    setCurrentTime(formattedTime);
+    const formattedDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
+    setCurrentDate(formattedDate);
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
 
 
   return (
-    <main className="bg-gradient-to-b from-rose-50 to-white min-h-screen">
+    <main className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
       <Toaster position="top-center" richColors closeButton />
 
       <Header
@@ -332,18 +342,24 @@ function CitasPage() {
                       <div>
                         <label className="block text-gray-700 mb-2">Hora Disponible</label>
                         <div className="grid grid-cols-4 gap-2">
-                          {AVAILABLE_TIMES.map((time) => (
-                            <TimeSlotButton
-                              key={time}
-                              time={time}
-                              selected={selectedTime === time}
-                              onClick={() => {
-                                setSelectedTime(time);
-                                scrollAfterTypeSelection("personalInfo");
-                              }
-                              }
-                            />
-                          ))}
+                          {AVAILABLE_TIMES.map((time) => {
+                            const isPast = selectedDate === currentDate && time < currentTime;
+                            
+                            return (
+                              <TimeSlotButton
+                                key={time}
+                                time={time}
+                                selected={selectedTime === time}
+                                disabled={isPast}
+                                onClick={() => {
+                                  if (!isPast) {
+                                    setSelectedTime(time);
+                                    scrollAfterTypeSelection("personalInfo");
+                                  }
+                                }}
+                              />
+                            );
+                          })}
                         </div>
                       </div>
                     </motion.div>
@@ -401,11 +417,10 @@ function CitasPage() {
                       type="submit"
                       className={` text-white px-8 py-3 rounded-full 
                     transition-colors shadow-lg  
-                    ${
-                      isLoading
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-rose-500 hover:bg-rose-600"
-                    }`}
+                    ${isLoading
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-blue-500 hover:bg-blue-600"
+                        }`}
                       disabled={isLoading}
                     >
                       {isLoading ? 'Reservando...' : 'Confirmar Reserva'} {/* Muestra texto diferente mientras carga */}
@@ -441,7 +456,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, resetForm }: {
 
         <Link
           key={"Clínica Keis"}
-          className="div h-15 text-rose-500 font-bold text-2xl cursor-pointer"
+          className="div h-15 text-blue-500 font-bold text-2xl cursor-pointer"
           href={"/"}
 
         >
@@ -453,14 +468,13 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, resetForm }: {
           {NAV_ITEMS.map((item) => (
             <Link
               key={item}
-              href={item === "Inicio" ? "/" : `#${item.toLowerCase()}`}
-              className="text-gray-700 hover:text-rose-500 transition-colors font-medium cursor-pointer"
+              href={item === "Reserva" ? "/citas" : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
+              className="text-gray-700 hover:text-blue-500 transition-colors font-medium cursor-pointer"
               onClick={(e) => {
-                if (item === "Inicio") return;
+                if (item != "Reserva") return;
                 e.preventDefault();
-                if (item === "Reservar") {
-                  resetForm();
-                }
+                resetForm();
+                
 
               }}
             >
@@ -486,7 +500,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, resetForm }: {
               <Link
                 key={item}
                 href={item === "Reserva" ? "/citas" : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                className="block py-2 text-gray-700 hover:text-rose-500"
+                className="block py-2 text-gray-700 hover:text-blue-500"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item}
