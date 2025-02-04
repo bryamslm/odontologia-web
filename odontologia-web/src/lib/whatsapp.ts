@@ -43,3 +43,45 @@ Gracias por usar nuestro sistema de citas automatizado.`,
         return (error as Error).message;
     }
 }
+
+export const sendWhatsAppMessageAPI = async (
+    to: string, 
+    templateName: string,
+    parameters: string[]
+  ) => {
+    try {
+      const response = await fetch(
+        `https://graph.facebook.com/v21.0/${process.env.PHONE_NUMBER_ID}/messages`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            messaging_product: "whatsapp",
+            to: to,
+            type: "template",
+            template: {
+              name: templateName,
+              language: { code: "es" },
+              components: [
+                {
+                  type: "body",
+                  parameters:  parameters.map(value => ({
+                    type: "text",
+                    text: value
+                  }))
+                }
+              ]
+            }
+          })
+        }
+      );
+  
+      return await response.json();
+    } catch (error) {
+      console.error('Error sending WhatsApp message:', error);
+      throw error;
+    }
+  };

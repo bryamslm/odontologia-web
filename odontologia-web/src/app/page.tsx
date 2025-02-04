@@ -72,7 +72,7 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }:
             role="button"
             tabIndex={0}
           >
-            Clínica Keis
+            FlowDent
           </div>
 
           <nav className="hidden md:flex h-15 space-x-8">
@@ -139,7 +139,7 @@ const Footer = memo(() => (
     <div className="max-w-7xl mx-auto px-4">
       <div className="grid md:grid-cols-3 gap-8">
         <div>
-          <h5 className="text-2xl font-bold mb-4">Clínica Keis</h5>
+          <h5 className="text-2xl font-bold mb-4">FlowDent</h5>
           <p className="text-gray-400">
             Comprometidos con tu salud dental y tu bienestar.
           </p>
@@ -176,7 +176,7 @@ const Footer = memo(() => (
         </div>
       </div>
       <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-        <p>&copy; 2025 Clínica Keis. Todos los derechos reservados.</p>
+        <p>&copy; 2025 FlowDent. Todos los derechos reservados.</p>
       </div>
     </div>
   </footer>
@@ -252,7 +252,7 @@ export default function Home() {
                 Tu sonrisa merece la mejor atención
               </h1>
               <p className="text-lg text-gray-600 mb-8">
-                Con la Dra. Karen Vargas Cortés, tu salud dental está en las mejores manos.
+                Con FlowDent, tu salud dental está en las mejores manos.
                 Experimenta una atención personalizada y resultados excepcionales.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
@@ -275,7 +275,7 @@ export default function Home() {
             <div className="hidden md:block relative h-96 md:h-[500px] rounded-2xl overflow-hidden">
               <Image
                 src="/doc-3.png"
-                alt="Dra. Karen Dayana Vargas"
+                alt="FlowBiz Dental"
                 className="w-full h-full object-contain rounded-2xl shadow-xl"
                 width={500}
                 height={500}
@@ -300,7 +300,7 @@ export default function Home() {
               </h2>
               <div className="prose prose-lg text-gray-600">
                 <p>
-                  La Dra. Karen cuenta con más de 5 años de experiencia
+                  FlowBiz Dental cuenta con más de 5 años de experiencia
                   en odontología general y estética. Su compromiso con la excelencia y
                   la atención personalizada la han convertido en una profesional
                   reconocida en San Carlos.
@@ -322,11 +322,11 @@ export default function Home() {
               </div>
               <div className="flex gap-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-500">+500</div>
+                  <div className="text-3xl font-bold text-blue-500">+000</div>
                   <div className="text-sm text-gray-600">Pacientes Satisfechos</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-500">5</div>
+                  <div className="text-3xl font-bold text-blue-500">0</div>
                   <div className="text-sm text-gray-600">Años de Experiencia</div>
                 </div>
                 <div className="text-center">
@@ -390,7 +390,7 @@ export default function Home() {
             <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
               <div className="text-blue-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
-                &quot;Nunca había tenido una experiencia dental tan reconfortante. La Dra. Karen no solo fue extremadamente profesional, sino también muy empática. Me explicó cada paso del tratamiento de blanqueamiento, lo que me ayudó a sentirme completamente tranquila y segura.&quot;
+                &quot;Nunca había tenido una experiencia dental tan reconfortante. FlowDental no solo fue extremadamente profesional, sino también muy empática. Me explicó cada paso del tratamiento de blanqueamiento, lo que me ayudó a sentirme completamente tranquila y segura.&quot;
               </p>
               <p className="font-medium text-black">Laura Rodríguez</p>
               <p className="text-sm text-gray-500">Tratamiento de Blanqueamiento</p>
@@ -399,7 +399,7 @@ export default function Home() {
             <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
               <div className="text-blue-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
-                &quot;Como alguien con miedo al dentista, encontrar a la Dra. Vargas fue un verdadero alivio. Su enfoque suave y profesional me ayudó a superar mi ansiedad. El tratamiento de ortodoncia preventiva que me realizó fue completamente indoloro y los resultados son increíbles.&quot;
+                &quot;Como alguien con miedo al dentista, encontrar a FlowDental fue un verdadero alivio. Su enfoque suave y profesional me ayudó a superar mi ansiedad. El tratamiento de ortodoncia preventiva que me realizó fue completamente indoloro y los resultados son increíbles.&quot;
               </p>
               <p className="font-medium text-black">Rodrigo Martínez</p>
               <p className="text-sm text-gray-500">Ortodoncia Preventiva</p>
@@ -408,7 +408,7 @@ export default function Home() {
             <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
               <div className="text-blue-500 mb-4">★★★★★</div>
               <p className="text-gray-600 mb-4">
-                &quot;Llegué con un problema de caries que me preocupaba mucho. La Dra. Karen no solo trató el problema de manera eficiente, sino que me educó sobre prevención dental. Su atención detallada y el seguimiento posterior me hicieron sentir completamente respaldada en mi cuidado dental.&quot;
+                &quot;Llegué con un problema de caries que me preocupaba mucho. FlowDental no solo trató el problema de manera eficiente, sino que me educó sobre prevención dental. Su atención detallada y el seguimiento posterior me hicieron sentir completamente respaldada en mi cuidado dental.&quot;
               </p>
               <p className="font-medium text-black">Sofía Guzmán</p>
               <p className="text-sm text-gray-500">Tratamiento de Caries</p>
@@ -434,7 +434,7 @@ export default function Home() {
                 <MapPin className="text-blue-500" />
                 <div>
                   <p className="font-medium  text-black">Dirección</p>
-                  <p className="text-gray-600">San José de La Tigra, San Carlos, Alajuela, Costa Rica.</p>
+                  <p className="text-gray-600">San Carlos, Alajuela, Costa Rica.</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -460,4 +460,5 @@ export default function Home() {
       <WhatsAppButton />
     </main>
   );
+  
 }

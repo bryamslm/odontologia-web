@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
 import { sendMail } from "@/lib/email"; // la ruta que corresponda
-import { sendWhatsAppMessage } from "@/lib/whatsapp"; // la ruta que corresponda
+import { sendWhatsAppMessageAPI } from "@/lib/whatsapp"; // la ruta que corresponda
 
 export async function POST(req: NextRequest) {
     try {
@@ -47,12 +47,12 @@ export async function POST(req: NextRequest) {
         <body>
             <div class="container">
                 <div class="header">
-                    <img src="https://odontologia-web.vercel.app/logo-5.svg" alt="Clínica Dental Keis" class="logo">
+                    <img src="https://odontologia-web.vercel.app/logo-5.svg" alt="FlowDent" class="logo">
                 </div>
                 
                 <div class="content">
                     <h2 style="color: #2d3748;">¡Hola ${nombre}!</h2>
-                    <p style="color: #4a5568;">Tu cita en Clínica Dental Keis ha sido confirmada:</p>
+                    <p style="color: #4a5568;">Tu cita en FlowDent ha sido confirmada:</p>
                     
                     <table class="details">
                         <tr>
@@ -90,11 +90,14 @@ export async function POST(req: NextRequest) {
                 </div>
 
                 <div class="footer">
-                    <p>Clínica Dental Keis · Tel: 0000-0000 · Urgencias: 0000-0000</p>
+                    <p>FlowDent · Tel: 0000-0000 · Urgencias: 0000-0000</p>
                     <div style="margin-top: 10px;">
-                        <a href="https://facebook.com/clinica-keis" style="margin: 0 10px;">Facebook</a>
-                        <a href="https://instagram.com/clinica-keis" style="margin: 0 10px;">Instagram</a>
+                        <a href="https://www.facebook.com/profile.php?id=61572656967759" style="margin: 0 10px;">Facebook</a>
+                        <a href="https://instagram.com/" style="margin: 0 10px;">Instagram</a>
                     </div>
+                </div>
+                 <div style="margin-top: 20px; font-size: 12px; color: #666;">
+                    <p>Este mensaje fue generado automáticamente por el sistema de citas FlowDent.</p>
                 </div>
             </div>
         </body>
@@ -154,7 +157,7 @@ export async function POST(req: NextRequest) {
                 </div>
 
                 <div style="margin-top: 20px; font-size: 12px; color: #666;">
-                    <p>Este mensaje fue generado automáticamente por el sistema de citas.</p>
+                    <p>Este mensaje fue generado automáticamente por el sistema de citas FlowDent.</p>
                 </div>
             </div>
         </body>
@@ -175,7 +178,10 @@ export async function POST(req: NextRequest) {
             );
 
             // Enviar mensaje de WhatsApp
-            const res = await sendWhatsAppMessage(nombre, tipo, fechaFormat, hora, correo, telefono);
+            //objeto con lista clave valor
+            const parameters = [fechaFormat, hora, tipo, nombre, correo, telefono];
+            const res = await sendWhatsAppMessageAPI("50662633553", "nueva_cita", parameters);
+            //const res = await sendWhatsAppMessage(nombre, tipo, fechaFormat, hora, correo, telefono);
             console.log("Mensaje de WhatsApp enviado?: ", res);
         }
         return NextResponse.json({ message: "Cita reservada con éxito", data });

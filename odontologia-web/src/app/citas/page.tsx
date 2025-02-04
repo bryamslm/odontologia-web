@@ -6,15 +6,10 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { Header } from '@/components/citas/header';
+import { Footer } from '@/components/citas/footer';
 
-// Carga diferida de componentes e iconos
-const Menu = dynamic(() => import('lucide-react').then(mod => mod.Menu), { ssr: false });
-const X = dynamic(() => import('lucide-react').then(mod => mod.X), { ssr: false });
-const SocialIcons = {
-  Facebook: dynamic(() => import('lucide-react').then(mod => mod.Facebook), { ssr: false }),
-  Instagram: dynamic(() => import('lucide-react').then(mod => mod.Instagram), { ssr: false }),
-  Twitter: dynamic(() => import('lucide-react').then(mod => mod.Twitter), { ssr: false })
-};
+
 
 // Datos estáticos
 const APPOINTMENT_TYPES = [
@@ -77,7 +72,7 @@ const APPOINTMENT_TYPES = [
 ];
 
 const AVAILABLE_TIMES = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
-const NAV_ITEMS = ["Inicio", "Sobre nosotros", "Servicios", "Reserva", "Contacto"];
+
 
 // Componentes memoizados
 const AppointmentTypeCard = memo(({ type, selected, onClick }: {
@@ -115,48 +110,7 @@ const TimeSlotButton = memo(({ time, selected, disabled, onClick }: {
 ));
 TimeSlotButton.displayName = 'TimeSlotButton';
 
-const Footer = memo(() => (
-  <footer className="bg-gray-900 text-white py-12">
-    <div className="max-w-7xl mx-auto px-4">
-      <div className="grid md:grid-cols-3 gap-8">
-        <div>
-          <h5 className="text-2xl font-bold mb-4">Clínica Keis</h5>
-          <p className="text-gray-400">Comprometidos con tu salud dental y tu bienestar.</p>
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
-          <div className="space-y-2">
-            {["Inicio", "Servicios", "Sobre nosotros", "Contacto"].map((item) => (
-              <Link
-                key={item}
-                href={`/#${item.toLowerCase().replace(' ', '-')}`}
-                className="block text-gray-400 hover:text-blue-400"
-                prefetch={false}
-              >
-                {item}
-              </Link>
-            ))}
-          </div>
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold mb-4">Síguenos</h3>
-          <div className="flex space-x-4">
-            {Object.entries(SocialIcons).map(([name, Icon]) => (
-              <Link key={name} href="#" className="text-gray-400 hover:text-blue-400">
-                <Icon size={24} />
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-        <p>&copy; 2025 Clínica Keis. Todos los derechos reservados.</p>
-      </div>
-    </div>
-  </footer>
-));
 
-Footer.displayName = 'Footer';
 
 const WhatsAppButton = memo(() => (
   <Link
@@ -201,7 +155,7 @@ function CitasPage() {
     setTimeout(() => {
       scrollToSection(id);
     }, 500);
-  }, [selectedType, scrollToSection]);
+  }, [selectedType]);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -213,7 +167,7 @@ function CitasPage() {
     setIsLoading(true);  // Se inicia el estado de carga
 
     try {
-      const res = await fetch("/citas/reservar", {
+      const res = await fetch("/api/citas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -442,76 +396,6 @@ function CitasPage() {
 
 
 
-const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, resetForm }: {
-  isScrolled: boolean;
-  isMenuOpen: boolean;
-  setIsMenuOpen: React.Dispatch<boolean>;
-  resetForm: () => void;
 
-}) => (
-  <header className={`fixed w-full transition-all duration-300 z-40 ${isScrolled ? 'bg-white/95 shadow-md' : 'bg-transparent'
-    }`}>
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between items-center h-20">
-
-        <Link
-          key={"Clínica Keis"}
-          className="div h-15 text-blue-500 font-bold text-2xl cursor-pointer"
-          href={"/"}
-
-        >
-          Clínica Keis
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8 h-15">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item}
-              href={item === "Reserva" ? "/citas" : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
-              className="text-gray-700 hover:text-blue-500 transition-colors font-medium cursor-pointer"
-              onClick={(e) => {
-                if (item != "Reserva") return;
-                e.preventDefault();
-                resetForm();
-                
-
-              }}
-            >
-              {item}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2 text-black"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white absolute top-20 left-0 w-full shadow-lg ">
-          <div className="px-4 py-2 space-y-2">
-            {["Inicio", "Sobre nosotros", "Servicios", "Reserva", "Contacto"].map((item) => (
-              <Link
-                key={item}
-                href={item === "Reserva" ? "/citas" : `/#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                className="block py-2 text-gray-700 hover:text-blue-500"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  </header>
-));
-Header.displayName = 'Header';
 
 export default CitasPage;
