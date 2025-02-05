@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const VERIFY_TOKEN = process.env.META_API_TOKEN;
+const VERIFY_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
 
 // ✅ Ruta de verificación de Webhook
 export async function GET(req: NextRequest) {

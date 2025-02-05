@@ -1,7 +1,7 @@
 // import { sendMail } from "@/lib/email";
 
 // export default async function handler(req, res) {
-//     // Verificar firma Twilio
+//     //Verificar firma Twilio
 //     //if (!validarTwilioSignature(req)) return res.status(403).end();
   
 //     const { Body, From, ButtonText } = req.body;
