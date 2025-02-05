@@ -165,17 +165,17 @@ export async function POST(req: NextRequest) {
         `;
 
             // Uso en el código
-            await sendMail(
-                correo,
-                `✅ Confirmación de Cita: ${fechaFormat} ${hora} - Clínica Keis`,
-                pacienteHTML
-            );
+            // await sendMail(
+            //     correo,
+            //     `✅ Confirmación de Cita: ${fechaFormat} ${hora} - Clínica Keis`,
+            //     pacienteHTML
+            // );
 
-            await sendMail(
-                "bryam.steven.lopez@gmail.com",
-                `📅 Nueva Cita: ${nombre} - ${fechaFormat} ${hora}`,
-                doctoraHTML
-            );
+            // await sendMail(
+            //     "bryam.steven.lopez@gmail.com",
+            //     `📅 Nueva Cita: ${nombre} - ${fechaFormat} ${hora}`,
+            //     doctoraHTML
+            // );
 
             // Enviar mensaje de WhatsApp
             //objeto con lista clave valor
