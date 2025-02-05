@@ -26,23 +26,33 @@ export async function POST(req: NextRequest) {
                 text: {
                     body: string;
                 };
+                button: {
+                    text: string;
+                };
             }[];
         };
     }
+
+    
 
     interface WebhookEntry {
         changes: WebhookChange[];
     }
 
     const body = await req.json();
-    console.log('📩 Mensaje recibido:', JSON.stringify(body, null, 2));
 
     if (body.object === 'whatsapp_business_account') {
         (body.entry as WebhookEntry[]).forEach((entry) => {
             entry.changes.forEach((change) => {
                 if (change.value.messages) {
                     const message = change.value.messages[0];
-                    console.log(`📨 Nuevo mensaje de ${message.from}: ${message.text.body}`);
+                    if(message.text?.body){
+                        const text = message.text.body;
+                        console.log('📩 Mensaje de texto:', text);
+                    }else if(message.button?.text){
+                        const button = message.button.text;
+                        console.log('📩 Mensaje de botón:', button);
+                    }
                 }
             });
         });
