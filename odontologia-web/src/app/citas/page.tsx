@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback, memo } from 'react';
 import { Toaster, toast } from 'sonner';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Header } from '@/components/citas/header';
 import { Footer } from '@/components/citas/footer';
