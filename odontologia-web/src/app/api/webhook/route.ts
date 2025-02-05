@@ -19,12 +19,27 @@ export async function GET(req: NextRequest) {
 
 // ✅ Ruta para recibir eventos de WhatsApp
 export async function POST(req: NextRequest) {
+    interface WebhookChange {
+        value: {
+            messages?: {
+                from: string;
+                text: {
+                    body: string;
+                };
+            }[];
+        };
+    }
+
+    interface WebhookEntry {
+        changes: WebhookChange[];
+    }
+
     const body = await req.json();
     console.log('📩 Mensaje recibido:', JSON.stringify(body, null, 2));
 
     if (body.object === 'whatsapp_business_account') {
-        body.entry.forEach((entry: any) => {
-            entry.changes.forEach((change: any) => {
+        (body.entry as WebhookEntry[]).forEach((entry) => {
+            entry.changes.forEach((change) => {
                 if (change.value.messages) {
                     const message = change.value.messages[0];
                     console.log(`📨 Nuevo mensaje de ${message.from}: ${message.text.body}`);
