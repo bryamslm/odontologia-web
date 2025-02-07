@@ -1,5 +1,11 @@
 import { supabase } from "@/lib/supabaseClient";
 
+//interface para cita
+export interface Cita { 
+    hora_cita: string;
+   
+}
+
 export const getBloackedTimes = async (selectedDate: Date | undefined, availableTimes: string[]): Promise<string[]> => {
     // Formatear la fecha a "YYYY-MM-DD" si está seleccionada
     const formattedSelectedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : null;
@@ -14,7 +20,7 @@ export const getBloackedTimes = async (selectedDate: Date | undefined, available
     }
     const blockedTimesL: string[] = [];
     if (data) {
-        data.map((cita: any) => {
+        data.map((cita: Cita) => {
             // obtener hora_cita tipo Time y obetner string en formato HH:MM
             const time = cita.hora_cita.split(":").slice(0, 2).join(":");
             //nuscar si la hora de la cita ya está en el array de horas disponibles

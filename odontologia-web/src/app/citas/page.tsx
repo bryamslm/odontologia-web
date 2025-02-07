@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect,  memo } from 'react';
 import { Toaster, toast } from 'sonner';
 import Image from 'next/image';
 import { motion } from 'framer-motion';

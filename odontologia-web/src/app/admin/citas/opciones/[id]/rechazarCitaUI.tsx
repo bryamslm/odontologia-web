@@ -8,11 +8,22 @@ import { RescheduleUI } from "@/app/admin/citas/opciones/[id]/RescheduleUI";
 import { es } from "date-fns/locale";
 import { parseISO } from "date-fns";
 
+//interface para cita
+export interface Cita {
+  fecha_cita: string;
+  hora_cita: string;
+  numero: number;
+  nombre_paciente: string;
+  correo_paciente: string;
+  telefono_paciente: string;
+  tipo_cita: string;
+}
 
-export default function RechazarCitaUI({ cita }: { cita: any }) {
+
+export default function RechazarCitaUI({ cita }: { cita: Cita }) {
   const [action, setAction] = useState<'confirm' | 'cancel' | 'reschedule' | null>(null);
 
-   const [currentDate, setCurrentDate] = useState<Date | undefined>(parseISO(cita.fecha_cita));
+   const [currentDate ] = useState<Date | undefined>(parseISO(cita.fecha_cita));
 
   const handleReschedule = async (newDate: Date, newTime: string) => {
     // Lógica para actualizar la cita en Supabase

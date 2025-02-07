@@ -8,8 +8,14 @@ import { motion } from 'framer-motion';
 import { format, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale'; // Opcional para localización
 
+//interface para cita
+export interface Cita {
+  fecha_cita: string;
+  hora_cita: string;
+}
+
 export const RescheduleUI = ({ cita, onConfirm }: {
-  cita: any;
+  cita: Cita;
   onConfirm: (newDate: Date, newTime: string) => Promise<void>;
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(parseISO(cita.fecha_cita));
@@ -20,10 +26,6 @@ export const RescheduleUI = ({ cita, onConfirm }: {
   const [showCalendar, setShowCalendar] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Fechas deshabilitadas en el calendario (ejemplo: fines de semana)
-  const isDateDisabled = (date: Date) => {
-    return date.getDay() === 0 || date.getDay() === 6; // Deshabilitar fines de semana
-  };
 
   const handleReschedule = async () => {
     if (!selectedDate || !selectedTime) return;
