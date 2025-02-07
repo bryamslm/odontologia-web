@@ -7,7 +7,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Header } from '@/components/citas/header';
 import { Footer } from '@/components/citas/footer';
-
+import { TimeSlots } from '@/components/citas/timeSlots';
+import  Calendar from '@/components/ui/Calendar';
 
 
 // Datos estáticos
@@ -23,7 +24,7 @@ const APPOINTMENT_TYPES = [
     id: 'ortodoncia-inicial',
     name: 'Evaluación de Ortodoncia',
     description: 'Diagnóstico y plan de tratamiento personalizado',
-    icon: <div className="text-2xl mx-auto">🦿</div>, // Brackets (alternativa)
+    icon: <div className="text-2xl mx-auto">🦷</div>, // Brackets (alternativa)
     price: '₡ 35 000'
   },
   {
@@ -37,40 +38,41 @@ const APPOINTMENT_TYPES = [
     id: 'extraccion',
     name: 'Extracciones Dentales',
     description: 'Procedimiento seguro con sedación local',
-    icon: <div className="text-2xl mx-auto">🪛</div>, // Extracción (alternativa)
+    icon: <div className="text-2xl mx-auto">🦷</div>, // Extracción (alternativa)
     price: '₡ 40 000 - ₡ 75 000'
   },
   {
     id: 'caries',
     name: 'Tratamiento de Caries',
     description: 'Restauraciones en composite o amalgama',
-    icon: <div className="text-2xl mx-auto">🔧</div>, // Reparación
+    icon: <div className="text-2xl mx-auto">🦷</div>, // Reparación
     price: '₡ 35 000 - ₡ 55 000'
   },
   {
     id: 'protesis',
     name: 'Prótesis Dentales',
     description: 'Coronas, puentes y prótesis removibles',
-    icon: <div className="text-2xl mx-auto">👑</div>, // Corona
+    icon: <div className="text-2xl mx-auto">🦷</div>, // Corona
     price: '₡ 85 000'
   },
   {
     id: 'blanqueamiento',
     name: 'Blanqueo Dental',
     description: 'Tratamiento estético profesional en consultorio',
-    icon: <div className="text-2xl mx-auto">✨</div>, // Brillo
+    icon: <div className="text-2xl mx-auto">🦷</div>, // Brillo
     price: '₡ 60 000'
   },
   {
     id: 'urgencias',
     name: 'Urgencias Dentales',
     description: 'Atención inmediata para casos de emergencia',
-    icon: <div className="text-2xl mx-auto">🚨</div>, // Alerta
+    icon: <div className="text-2xl mx-auto">🦷</div>, // Alerta
     price: '₡ 45 000'
   }
 ];
 
 const AVAILABLE_TIMES = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+
 
 
 // Componentes memoizados
@@ -91,26 +93,6 @@ const AppointmentTypeCard = memo(({ type, selected, onClick }: {
 ));
 AppointmentTypeCard.displayName = 'AppointmentTypeCard';
 
-const TimeSlotButton = memo(({ time, selected, disabled, onClick }: {
-  time: string;
-  selected: boolean;
-  disabled: boolean;
-  onClick: () => void;
-}) => (
-  <button
-    type="button"
-    onClick={onClick}
-    disabled={disabled}
-    className={`p-2 rounded-lg border-2 text-sm text-black ${selected ? 'bg-blue-50 text-black border-blue-500 ' : 'border-gray-200 hover:bg-blue-50'
-      } ${disabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-blue-100'}`}
-  >
-    {time}
-  </button>
-));
-TimeSlotButton.displayName = 'TimeSlotButton';
-
-
-
 const WhatsAppButton = memo(() => (
   <Link
     href="https://wa.me/50662633553"
@@ -128,7 +110,8 @@ WhatsAppButton.displayName = 'WhatsAppButton';
 
 function CitasPage() {
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
+  const [selectedDateObj, setSelectedDateObj] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [formData, setFormData] = useState({ nombre: '', correo: '', telefono: '' });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -137,32 +120,37 @@ function CitasPage() {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState("");
 
-  const resetForm = useCallback(() => {
+  const resetForm = () => {
     setSelectedType(null);
-    setSelectedDate(null);
+    setSelectedDate(undefined);
     setSelectedTime(null);
     setFormData({ nombre: '', correo: '', telefono: '' });
-  }, []);
+  }
 
-  const scrollToSection = useCallback((sectionId: string) => {
+  const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, []);
+  }
 
-  const scrollAfterTypeSelection = useCallback((id: string) => {
+  const scrollAfterTypeSelection = (id: string) => {
     //wait 1 second for scroll to dateForm id
     setTimeout(() => {
       scrollToSection(id);
     }, 500);
-  }, [selectedType]);
+  }
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!selectedType || !selectedDate || !selectedTime) {
       toast.error('Por favor complete todos los campos');
       return;
     }
+    console.log("Form Data: ", formData);
+    console.log("Fecha for db: ", selectedDateObj);
+    console.log("Fecha for ui: ", selectedDate);
     setIsLoading(true);  // Se inicia el estado de carga
 
     try {
@@ -172,7 +160,7 @@ function CitasPage() {
         body: JSON.stringify({
           ...formData,
           tipo: selectedType,
-          fecha: selectedDate,
+          fecha: selectedDateObj,
           hora: selectedTime
         }),
       });
@@ -192,7 +180,7 @@ function CitasPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [formData, selectedType, selectedDate, selectedTime, resetForm]);
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -200,12 +188,20 @@ function CitasPage() {
     const now = new Date();
     const formattedTime = now.toLocaleTimeString('es-CR', { hour: '2-digit', minute: '2-digit', hour12: false });
     setCurrentTime(formattedTime);
-    const formattedDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
+    const formattedDate = now.toLocaleDateString('es-CR');
     setCurrentDate(formattedDate);
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const holidays = [
+    '2025-12-25', // Navidad
+    '2025-01-01', // Año Nuevo
+    '2025-04-11', // Jueves Santo
+    '2025-04-12', // Viernes Santo
+    
+    // Agrega otros días feriados según necesites
+  ];
 
 
   return (
@@ -247,7 +243,7 @@ function CitasPage() {
             <h2 className="text-3xl font-bold text-blue-900 mb-6 text-center">Reserva tu Cita</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold mb-4 text-gray-700">Elige un Servicio</h3>
+                <h3 className="text-xl font-semibold mb-4 text-gray-900">Elige un Servicio</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {APPOINTMENT_TYPES.map((type) => (
                     <AppointmentTypeCard
@@ -273,14 +269,26 @@ function CitasPage() {
 
                 >
                   <div>
-                    <label className="block text-gray-700 mb-2">Fecha de la Cita</label>
-                    <input
+                    <label className="block text-gray-900 mb-2">Fecha de la Cita</label>
+                    {/* <input
                       type="date"
                       value={selectedDate || ''}
-                      onChange={(e) => { setSelectedDate(e.target.value) }}
+                      onChange={(e) => { setSelectedDate(e.target.value); setSelectedDateObj(new Date(e.target.value)); console.log("DATE SELECT: ", e.target.value) }}
                       className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
                       min={new Date().toISOString().split('T')[0]}
                       required
+                    /> */}
+                    <Calendar
+                      selected={selectedDateObj}
+                      onSelect={(date: Date | undefined) => {
+                        setSelectedDate(date?.toLocaleDateString('es-CR').split('T')[0]);
+                        setSelectedDateObj(date);
+                        scrollAfterTypeSelection("timeForm");
+                        console.log("Fecha seleccionada:", selectedDate);
+                      }}
+                      holidays={holidays}
+                      required={true}
+                      
                     />
                   </div>
 
@@ -293,26 +301,19 @@ function CitasPage() {
 
                     >
                       <div>
-                        <label className="block text-gray-700 mb-2">Horas Disponible</label>
+                        <label className="block text-gray-900 mb-2">Horas Disponible</label>
                         <div className="grid grid-cols-4 gap-2">
-                          {AVAILABLE_TIMES.map((time) => {
-                            const isPast = selectedDate === currentDate && time < currentTime;
-                            
-                            return (
-                              <TimeSlotButton
-                                key={time}
-                                time={time}
-                                selected={selectedTime === time}
-                                disabled={isPast}
-                                onClick={() => {
-                                  if (!isPast) {
-                                    setSelectedTime(time);
-                                    scrollAfterTypeSelection("personalInfo");
-                                  }
-                                }}
-                              />
-                            );
-                          })}
+                          <TimeSlots
+                            selectedDate={selectedDate}
+                            selectedTime={selectedTime}
+                            setSelectedTime={setSelectedTime}
+                            scrollAfterTypeSelection={scrollAfterTypeSelection}
+                            selectedDateObj={selectedDateObj}
+                            AVAILABLE_TIMES={AVAILABLE_TIMES}
+                            currentDate={currentDate}
+                            currentTime={currentTime}
+                          />
+
                         </div>
                       </div>
                     </motion.div>
@@ -331,7 +332,7 @@ function CitasPage() {
                 >
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-gray-700 mb-2">
+                      <label className="block text-gray-900 mb-2">
                         Nombre Completo
                       </label>
                       <input
@@ -343,7 +344,7 @@ function CitasPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700 mb-2">
+                      <label className="block text-gray-900 mb-2">
                         Correo Electrónico
                       </label>
                       <input
@@ -355,7 +356,7 @@ function CitasPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700 mb-2">
+                      <label className="block text-gray-900 mb-2">
                         Teléfono
                       </label>
                       <input

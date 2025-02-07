@@ -11,6 +11,32 @@
   --font-body: 400;
 }
 
+
+@media (max-width: 768px) {
+  :root .rdp-root {
+    --rdp-day-height: 44px; 
+    --rdp-day-width: 39px; 
+    --rdp-day_button-height: 42px; 
+    --rdp-day_button-width: 30px; 
+  }
+}
+@media (min-width: 769px) {
+  :root .rdp-root {
+    --rdp-day-height: 44px;  /* Ajusta el tamaño para pantallas grandes */
+    --rdp-day-width: 90px;  
+    --rdp-day_button-height: 42px;  
+    --rdp-day_button-width: 100%;  
+  }
+}
+
+
+
+:root .rdp-root{
+  --rdp-accent-color: #3B82F6;
+} 
+
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

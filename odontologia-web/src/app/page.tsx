@@ -251,7 +251,7 @@ export default function Home() {
               <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
                 Tu sonrisa merece la mejor atención
               </h1>
-              <p className="text-lg text-gray-600 mb-8">
+              <p className="text-lg text-gray-900 mb-8">
                 Con FlowDent, tu salud dental está en las mejores manos.
                 Experimenta una atención personalizada y resultados excepcionales.
               </p>

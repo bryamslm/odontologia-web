@@ -47,7 +47,8 @@ Gracias por usar nuestro sistema de citas automatizado.`,
 export const sendWhatsAppMessageAPI = async (
     to: string, 
     templateName: string,
-    parameters: string[]
+    parameters: string[],
+    urlParams: string[],
   ) => {
     try {
       const response = await fetch(
@@ -72,6 +73,16 @@ export const sendWhatsAppMessageAPI = async (
                     type: "text",
                     text: value
                   }))
+                },
+                {
+                  type: "button",
+                  sub_type: "url",  // Especifica que el tipo de botón es URL
+                  index: 2,  // El índice debe ser 2 si es el tercer botón en la plantilla (índices empiezan en 0)
+                  parameters: urlParams.map(value => ({
+                    type: "text",
+                    text: value
+                  }))
+                  
                 }
               ]
             }

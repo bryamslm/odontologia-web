@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
+    console.log('📨 Body:', body);
 
     if (body.object === 'whatsapp_business_account') {
         (body.entry as WebhookEntry[]).forEach((entry) => {
