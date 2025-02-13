@@ -86,7 +86,7 @@ export const sendWhatsAppMessageAPI = async (
                           {
                               type: "button",
                               sub_type: "url", // Specifies that the button type is URL
-                              index: 2, // The index should be 2 if it's the third button in the template (indices start at 0)
+                              index: 1, // The index should be 2 if it's the third button in the template (indices start at 0)
                               parameters: urlParams.map(value => ({
                                   type: "text",
                                   text: value
