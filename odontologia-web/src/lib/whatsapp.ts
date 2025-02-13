@@ -58,7 +58,7 @@ export const sendWhatsAppMessageAPI = async (
   templateName: string,
   parameters: string[],
   urlParams: string[],
-): Promise<any> => {
+) => {
   try {
       const response = await fetch(
           `https://graph.facebook.com/v21.0/${process.env.PHONE_NUMBER_ID}/messages`,

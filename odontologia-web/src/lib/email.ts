@@ -21,8 +21,8 @@ export async function sendMail(to: string, subject: string, htmlContent: string)
     };
     await sgMail.send(msg);
     return { success: true };
-  } catch (error: Error | any) {
+  } catch (error) {
     console.error("Error sending email:", error);
-    return { success: false, error };
+    return { success: false, error: error as Error };
   }
 }
