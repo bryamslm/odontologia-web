@@ -54,13 +54,17 @@ const SERVICES = [
   },
 ];
 
-const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }: {
+
+const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, activeSection, setActiveSection, scrollToSection }: {
   isScrolled: boolean;
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  activeSection: string;
+  setActiveSection: React.Dispatch<React.SetStateAction<string>>;
   scrollToSection: (sectionId: string) => void;
 }) => {
-  const navItems = ["Inicio", "Sobre nosotros", "Servicios", "Reserva", "Contacto"];
+const navItems = ["Inicio", "Sobre nosotros", "Servicios", "Reserva", "Contacto"];
+const setUnderline = (section: string) => (console.log("section: ",  section, " activeSection: ", activeSection));
 
   return (
     <header className={`fixed w-full transition-all duration-300 z-50 ${isScrolled ? 'bg-white/95 shadow-md' : 'bg-transparent'}`}>
@@ -80,15 +84,24 @@ const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }:
               <Link
                 key={item}
                 href={item === "Reserva" ? "/citas" : `#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                className="text-gray-700 hover:text-blue-500 transition-colors font-medium"
+                className={` 
+                  ${
+                    activeSection == item.toLowerCase().replace(/\s+/g, '-')
+                      ? "text-blue-500 hover:text-blue-600 transition-colors font-medium underline"
+                      : "text-gray-700 hover:text-blue-500 transition-colors font-medium"
+                  }`}
                 onClick={(e) => {
+                  setActiveSection(item.toLowerCase().replace(/\s+/g, '-'));
+                  
                   if (item === "Reserva") {
                     return; // Allow default link behavior for Reserva
                   }
+
                   e.preventDefault();
                   //colocoar en la url la seccion
                   window.history.pushState(null, "", `#${item.toLowerCase().replace(/\s+/g, '-')}`);
                   scrollToSection(item.toLowerCase().replace(/\s+/g, '-'));
+                  setUnderline(item.toLowerCase().replace(/\s+/g, '-'));
                 }}
                 prefetch={false}
               >
@@ -206,13 +219,19 @@ WhatsAppButton.displayName = 'WhatsAppButton';
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('inicio');
+  const [hash, setHash] = useState('');
 
   const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId);
+    setActiveSection(sectionId);
     element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
   useEffect(() => {
+    setHash(window.location.hash);
+    setActiveSection(window.location.hash.replace('#', '').replace(/\s+/g, '-') || 'inicio');
+    
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       setIsScrolled(scrollTop > 30);
@@ -235,7 +254,7 @@ export default function Home() {
 
   return (
     <main className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
-      <Header {...{ isScrolled, isMenuOpen, setIsMenuOpen, scrollToSection }} />
+      <Header {...{ isScrolled, isMenuOpen, setIsMenuOpen, activeSection, setActiveSection, scrollToSection }} />
 
       {/* Sección Hero */}
       <section id="inicio" className="pt-32 pb-16 px-4">
@@ -258,7 +277,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link
                   href="/citas"
-                  className="bg-blue-500 text-white px-8 py-3 rounded-full hover:bg-rose-600 transition-colors shadow-lg"
+                  className="bg-blue-500 text-white px-8 py-3 rounded-full hover:bg-blue-600 transition-colors shadow-lg"
                   prefetch={false}
                 >
                   Reservar Cita

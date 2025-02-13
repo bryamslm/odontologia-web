@@ -89,8 +89,10 @@ export const sendWhatsAppMessageAPI = async (
           })
         }
       );
-  
-      return await response.json();
+
+      const data = await response.json();
+      console.log('WhatsApp message sent:', data);  
+      return data;
     } catch (error) {
       console.error('Error sending WhatsApp message:', error);
       throw error;

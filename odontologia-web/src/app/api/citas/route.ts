@@ -17,11 +17,11 @@ export async function POST(req: NextRequest) {
                 telefono_paciente: telefono,
                 fecha_cita: fecha,
                 hora_cita: hora,
-                tipo_cita: tipo,
+                tipo_cita: tipo.id,
             },
         ]).select("numero");
         //fechaFormat cambia formato de AAAA-MM-DD a DD/MM/AAAA
-        const fechaFormat = fecha.split("-").reverse().join("/");
+        const fechaFormat = new Date(fecha).toLocaleDateString('es-CR').split('T')[0];
 
         if (error) {
 
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
             <style>
                 .container { max-width: 600px; margin: 20px auto; font-family: Arial, sans-serif; }
                 .header { background: #f8f9fa; padding: 20px; text-align: center; }
-                .logo { max-width: 150px; }
+                .logo { max-width: 100px; }
                 .content { padding: 30px; background: white; }
                 .details { margin: 20px 0; border-collapse: collapse; width: 100%; }
                 .details td { padding: 10px; border-bottom: 1px solid #eee; }
@@ -47,12 +47,12 @@ export async function POST(req: NextRequest) {
         <body>
             <div class="container">
                 <div class="header">
-                    <img src="https://odontologia-web.vercel.app/logo-5.svg" alt="FlowDent" class="logo">
+                    <img src="https://drive.google.com/uc?export=view&id=1cCaChcLeDTwAMeX7wQtkpTkk2L9JHxHZ" alt="FlowDent" class="logo">
                 </div>
                 
                 <div class="content">
                     <h2 style="color: #2d3748;">¡Hola ${nombre}!</h2>
-                    <p style="color: #4a5568;">Tu cita en FlowDent ha sido confirmada:</p>
+                    <p style="color: #4a5568;">Tu cita en FlowDent ha sido solicitada:</p>
                     
                     <table class="details">
                         <tr>
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
                         </tr>
                         <tr>
                             <td><strong>📌 Servicio:</strong></td>
-                            <td>${tipo}</td>
+                            <td>${tipo.name}</td>
                         </tr>
                         <tr>
                             <td><strong>📍 Dirección:</strong></td>
@@ -74,23 +74,23 @@ export async function POST(req: NextRequest) {
                     </table>
 
                     <div style="margin: 30px 0; background: #f0f4ff; padding: 20px; border-radius: 8px;">
-                        <h3 style="color: #2d3748; margin-top: 0;">Preparación para tu cita</h3>
+                        <h3 style="color: #2d3748; margin-top: 0;">Mientras procesamos tu cita:</h3>
                         <ul style="color: #4a5568; padding-left: 20px;">
-                            <li>Llegar 15 minutos antes</li>
-                            <li>Traer documento de identificación</li>
-                            <li>Lista de medicamentos actuales (si aplica)</li>
+                            <li>Esperar respuesta de la clínica.</li>
+                            <li>Se te informará si la clinica confirma, cancela o reprograma la cita.</li>
+                            <li>Los medios informativos son correo electrónico y whatsApp.</li>
                         </ul>
                     </div>
 
                     <p style="text-align: center; margin: 30px 0;">
-                        <a href="https://clinica-keis.com/cancelar-cita?token=ABC123" class="button">
+                        <a href="https://odontologia-web.vercel.app/" class="button">
                             Cancelar o Reprogramar
                         </a>
                     </p>
                 </div>
 
                 <div class="footer">
-                    <p>FlowDent · Tel: 0000-0000 · Urgencias: 0000-0000</p>
+                    <p>FlowDent · Tel: 6263-3553 · Urgencias: 6263-3553</p>
                     <div style="margin-top: 10px;">
                         <a href="https://www.facebook.com/profile.php?id=61572656967759" style="margin: 0 10px;">Facebook</a>
                         <a href="https://instagram.com/" style="margin: 0 10px;">Instagram</a>
@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
         </head>
         <body>
             <div class="container">
-                <h2 style="color: #1e3a8a;">📅 Nueva Cita Programada</h2>
+                <h2 style="color: #1e3a8a;">📅 Nueva Cita Solicitada</h2>
                 
                 <div class="alert">
                     <strong>¡Nueva cita registrada!</strong> Por favor revisa los detalles:
@@ -140,11 +140,11 @@ export async function POST(req: NextRequest) {
                     </tr>
                     <tr>
                         <td><strong>Servicio:</strong></td>
-                        <td>${tipo}</td>
+                        <td>${tipo.name}</td>
                     </tr>
                     <tr class="highlight">
                         <td><strong>Duración Estimada:</strong></td>
-                        <td>${tipo === 'Limpieza Dental' ? '45 minutos' : '1 hora'}</td>
+                        <td>${tipo.id === 'limpieza' ? '≈ 45 minutos' : '≈ 1 hora'}</td>
                     </tr>
                 </table>
 
@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
             //Uso en el código
             await sendMail(
                 correo,
-                `✅ Confirmación de Cita: ${fechaFormat} ${hora} - Clínica Keis`,
+                `📅 Cita solicitada: ${fechaFormat} ${hora} - FlowDent`,
                 pacienteHTML
             );
 
@@ -180,7 +180,7 @@ export async function POST(req: NextRequest) {
             // Enviar mensaje de WhatsApp
             //objeto con lista clave valor
             const numeroCita = data[0].numero.toString();
-            const parameters = [new Date(fecha).toLocaleDateString('es-CR').split('T')[0], hora, tipo, nombre, correo, telefono, numeroCita];
+            const parameters = [fechaFormat, hora, tipo.name, nombre, correo, telefono, numeroCita];
             const res = await sendWhatsAppMessageAPI("50662633553", "nueva_cita_2", parameters, [numeroCita]);
             //const res = await sendWhatsAppMessage(nombre, tipo, fechaFormat, hora, correo, telefono);
             console.log("Mensaje de WhatsApp enviado?: ", res);

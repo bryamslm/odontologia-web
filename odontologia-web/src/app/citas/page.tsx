@@ -9,13 +9,14 @@ import { Header } from '@/components/citas/header';
 import { Footer } from '@/components/citas/footer';
 import { TimeSlots } from '@/components/citas/timeSlots';
 import  Calendar from '@/components/ui/Calendar';
+import { id } from 'date-fns/locale';
 
 
 // Datos estáticos
 const APPOINTMENT_TYPES = [
   {
     id: 'limpieza',
-    name: 'Limpieza Dental Profesional',
+    name: 'Limpieza Dental',
     description: 'Remoción de placa y sarro con tecnología ultrasónica',
     icon: <div className="text-2xl mx-auto">🦷</div>, // Diente
     price: '₡ 25 000'
@@ -109,7 +110,7 @@ const WhatsAppButton = memo(() => (
 WhatsAppButton.displayName = 'WhatsAppButton';
 
 function CitasPage() {
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<{id: string, name: string } | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
   const [selectedDateObj, setSelectedDateObj] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
@@ -249,9 +250,9 @@ function CitasPage() {
                     <AppointmentTypeCard
                       key={type.id}
                       type={type}
-                      selected={selectedType === type.id}
+                      selected={selectedType?.id === type.id}
                       onClick={() => {
-                        setSelectedType(type.id);
+                        setSelectedType({id: type.id, name: type.name});
                         scrollAfterTypeSelection("dateForm");
                       }}
                     />

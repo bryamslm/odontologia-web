@@ -55,6 +55,7 @@ export async function POST(req: NextRequest) {
                         console.log('📩 Mensaje de botón:', button);
                     }
                 }
+                console.log('📩 Cambio: ', change);
             });
         });
     }
