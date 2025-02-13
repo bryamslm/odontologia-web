@@ -2,7 +2,6 @@
 import { memo } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 
 const Menu = dynamic(() => import('lucide-react').then(mod => mod.Menu), { ssr: false });
 const X = dynamic(() => import('lucide-react').then(mod => mod.X), { ssr: false });

@@ -1,8 +1,17 @@
+
 import sgMail from "@sendgrid/mail";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
-export async function sendMail(to: string, subject: string, htmlContent: string) {
+/**
+ * Sends an email using SendGrid.
+ *
+ * @param {string} to - The recipient's email address.
+ * @param {string} subject - The subject of the email.
+ * @param {string} htmlContent - The HTML content of the email.
+ * @returns {Promise<{ success: boolean; error?: any }>} - An object indicating the success of the operation and any error encountered.
+ */
+export async function sendMail(to: string, subject: string, htmlContent: string): Promise<{ success: boolean; error?: Error }> {
   try {
     const msg = {
       to,
@@ -12,8 +21,8 @@ export async function sendMail(to: string, subject: string, htmlContent: string)
     };
     await sgMail.send(msg);
     return { success: true };
-  } catch (error) {
-    console.error("Error enviando email:", error);
+  } catch (error: Error | any) {
+    console.error("Error sending email:", error);
     return { success: false, error };
   }
 }

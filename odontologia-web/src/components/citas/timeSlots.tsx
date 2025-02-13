@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { TimeSlotButton } from '@/components/ui/timeSlotButton'; // Asegúrate de importar tu componente
-import { bloeckedTimesHandle } from '@/lib/utils'; // Asegúrate de importar tu función
+import { getBlockedTimes } from '@/services/timeServices';
 
 export const TimeSlots = ({ 
   selectedDate,
@@ -29,7 +29,7 @@ export const TimeSlots = ({
   // Ejecutar bloeckedTimesHandle solo cuando cambie selectedDateObj o AVAILABLE_TIMES
   useEffect(() => {
     const fetchBlockedTimes = async () => {
-      const times = await bloeckedTimesHandle(selectedDateObj, AVAILABLE_TIMES);
+      const times = await getBlockedTimes(selectedDateObj, AVAILABLE_TIMES);
       setBlockedTimes(times);
     };
     fetchBlockedTimes();
