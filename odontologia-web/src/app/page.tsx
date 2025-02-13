@@ -220,7 +220,7 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('inicio');
-  const [hash, setHash] = useState('');
+ 
 
   const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -229,7 +229,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    setHash(window.location.hash);
+    
     setActiveSection(window.location.hash.replace('#', '').replace(/\s+/g, '-') || 'inicio');
     
     const handleScroll = () => {

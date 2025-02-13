@@ -9,7 +9,6 @@ import { Header } from '@/components/citas/header';
 import { Footer } from '@/components/citas/footer';
 import { TimeSlots } from '@/components/citas/timeSlots';
 import  Calendar from '@/components/ui/Calendar';
-import { id } from 'date-fns/locale';
 
 
 // Datos estáticos

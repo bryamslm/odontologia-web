@@ -17,7 +17,6 @@ export const Header = memo(({ isScrolled, isMenuOpen, setIsMenuOpen, resetForm }
   resetForm: () => void;
 
 }) => {
-  const [sectionActive, setSectionActive] = useState<string>('Inicio');
 
   return (
     <header className={`fixed w-full transition-all duration-300 z-40 ${isScrolled ? 'bg-white/95 shadow-md' : 'bg-transparent'
