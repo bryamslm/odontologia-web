@@ -257,7 +257,7 @@ export default function Home() {
       <Header {...{ isScrolled, isMenuOpen, setIsMenuOpen, activeSection, setActiveSection, scrollToSection }} />
 
       {/* Sección Hero */}
-      <section id="inicio" className="pt-32 pb-16 px-4">
+      <section id="inicio" className="pt-28 pb-10 px-4">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -274,7 +274,7 @@ export default function Home() {
                 Con FlowDent, tu salud dental está en las mejores manos.
                 Experimenta una atención personalizada y resultados excepcionales.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className="flex flex-col sm:flex-row gap-6 justify-self-center text-center md:justify-center">
                 <Link
                   href="/citas"
                   className="bg-blue-500 text-white px-8 py-3 rounded-full hover:bg-blue-600 transition-colors shadow-lg"
@@ -309,7 +309,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section id="sobre-nosotros" className="py-20 px-4 bg-gradient-to-b from-white to-blue-50">
+      <section id="sobre-nosotros" className="py-10 px-4 bg-gradient-to-b from-white to-blue-50">
         
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">

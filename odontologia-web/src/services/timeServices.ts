@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabaseClient";
 /**
  * Interface for an appointment
  */
-export interface Cita { 
+export interface Cita {
     hora_cita: string;
 }
 
@@ -19,7 +19,12 @@ export const getBlockedTimes = async (selectedDate: Date | undefined, availableT
     const formattedSelectedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : null;
 
     // Query Supabase to check for appointments on the selected date
-    const { data , error } = await supabase.from("citas").select("*").eq("fecha_cita", formattedSelectedDate);
+    const { data, error } = await supabase
+        .from("citas")
+        .select("*")
+        .eq("fecha_cita", formattedSelectedDate)
+        .neq("estado", "Cancelada");
+
 
     // Handle any errors from the query
     if (error) {

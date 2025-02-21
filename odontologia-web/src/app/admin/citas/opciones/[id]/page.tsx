@@ -4,13 +4,12 @@ import RechazarCitaUI from "@/app/admin/citas/opciones/[id]/rechazarCitaUI";
 import Link from "next/link";
 
 async function getCita(id: string) {
-  // pasar id a número
-  const idNum = parseInt(id, 10);
+  
   // buscar cita en la base de datos
   const { data, error } = await supabase
     .from("citas")
     .select("*")
-    .eq("numero", idNum)
+    .eq("id", id)
     .single();
 
   if (error) {
@@ -25,7 +24,7 @@ function AdminHeader() {
     return (
       <header className="bg-transparent shadow p-4 flex justify-between items-center">
         <div className="text-2xl font-bold text-blue-500">FlowDent</div>
-        <Link href="/admin" className="text-blue-500 hover:underline">
+        <Link href="/admin/dashboard" className="text-blue-500 hover:underline">
           Panel Admin
         </Link>
       </header>

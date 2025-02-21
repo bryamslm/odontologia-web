@@ -1,6 +1,6 @@
 // RescheduleUI.tsx (Componente cliente nuevo)
 "use client";
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { TimeSlots } from '@/components/citas/timeSlots';
 import Calendar from '@/components/ui/Calendar'; // Asumiendo que tienes un componente Calendar
 import { Button } from '@/components/ui/button';
@@ -14,9 +14,11 @@ export interface Cita {
   hora_cita: string;
 }
 
-export const RescheduleUI = ({ cita, onConfirm }: {
+export const RescheduleUI = ({ cita, onConfirm, setAction }: {
   cita: Cita;
   onConfirm: (newDate: Date, newTime: string) => Promise<void>;
+  //setAction es  useState<'confirm' | 'cancel' | 'reschedule' | null>(null);
+  setAction: React.Dispatch<React.SetStateAction<"confirm" | "cancel" | "reschedule" | null>>;
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(parseISO(cita.fecha_cita));
   const [currentDate, setCurrentDate] = useState<Date | undefined>(parseISO(cita.fecha_cita));
@@ -32,12 +34,13 @@ export const RescheduleUI = ({ cita, onConfirm }: {
 
     setLoading(true);
     try {
-      await onConfirm(selectedDate, selectedTime);
+     
       setCurrentDate(selectedDate);
       setCurrentTime(selectedTime);
-      alert('Cita reprogramada exitosamente!');
-    } catch (error) {
-      alert('Error al reprogramar: ' + error);
+      await onConfirm(selectedDate, selectedTime);
+      
+    } catch {
+     
     }
     setLoading(false);
   };
@@ -125,7 +128,7 @@ export const RescheduleUI = ({ cita, onConfirm }: {
       {/* Acciones */}
       <div className="flex gap-4 justify-end">
         <Button
-          variant="outline"
+          variant="secondary"
           onClick={() => {
             setSelectedDate(undefined);
             setSelectedTime(null);
@@ -138,9 +141,19 @@ export const RescheduleUI = ({ cita, onConfirm }: {
         <Button
           onClick={handleReschedule}
           disabled={!selectedDate || !selectedTime || loading}
+          variant={loading ? 'default' : 'confirm'}
         >
           {loading ? 'Procesando...' : 'Confirmar Reprogramación'}
         </Button>
+        {/* back button */}
+        <Button
+          onClick={() => setAction(null)}
+          variant="secondary"
+        >
+          Regresar  
+        </Button>
+
+        
       </div>
     </div>
   );

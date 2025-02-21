@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect,  memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Toaster, toast } from 'sonner';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -8,8 +8,10 @@ import Link from 'next/link';
 import { Header } from '@/components/citas/header';
 import { Footer } from '@/components/citas/footer';
 import { TimeSlots } from '@/components/citas/timeSlots';
-import  Calendar from '@/components/ui/Calendar';
-
+import Calendar from '@/components/ui/Calendar';
+import NotificationModal from '@/components/ui/NotificationModal';
+import { format, parseISO } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 // Datos estáticos
 const APPOINTMENT_TYPES = [
@@ -109,22 +111,25 @@ const WhatsAppButton = memo(() => (
 WhatsAppButton.displayName = 'WhatsAppButton';
 
 function CitasPage() {
-  const [selectedType, setSelectedType] = useState<{id: string, name: string } | null>(null);
+  const [selectedType, setSelectedType] = useState<{ id: string, name: string } | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined);
   const [selectedDateObj, setSelectedDateObj] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ nombre: '', correo: '', telefono: '' });
+  const [formData, setFormData] = useState({ nombre: '', cedula: '', correo: '', telefono: '' });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState("");
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationTitle, setNotificationTitle] = useState('');
+  const [notificationMessage, setNotificationMessage] = useState('');
 
   const resetForm = () => {
     setSelectedType(null);
     setSelectedDate(undefined);
     setSelectedTime(null);
-    setFormData({ nombre: '', correo: '', telefono: '' });
+    setFormData({ nombre: '', cedula: '', correo: '', telefono: '' });
   }
 
   const scrollToSection = (sectionId: string) => {
@@ -151,6 +156,7 @@ function CitasPage() {
     console.log("Form Data: ", formData);
     console.log("Fecha for db: ", selectedDateObj);
     console.log("Fecha for ui: ", selectedDate);
+    console.log("Time for db: ",  selectedTime);
     setIsLoading(true);  // Se inicia el estado de carga
 
     try {
@@ -167,16 +173,21 @@ function CitasPage() {
 
       const result = await res.json();
       if (res.ok) {
-        toast.success('Cita Reservada con éxito', {
-          description: `Se ha reservado tu cita para el ${selectedDate} a las ${selectedTime}.\nSe ha enviado un correo de confirmación a ${formData.correo}`,
-          duration: 5000,
-        });
+        setNotificationTitle("Cita Solicitada Con Éxito");
+        setNotificationMessage(
+`Se ha solicitado tu cita para el día ${format(selectedDateObj ? selectedDateObj : parseISO(new Date().toString()), "PPPP", { locale: es })} a las ${selectedTime}.
+Se te ha notificado vía correo (${formData.correo}) sobre tu solucitud.
+          
+¡Gracias por confiar en nosotros!`
+        );
         resetForm();
       } else {
-        toast.error('Error al reservar', { description: result.error || 'No se pudo completar la reserva' });
+        setNotificationTitle("Error al reservar");
+        setNotificationMessage(result.error || "No se pudo completar la reserva");
       }
+      setNotificationOpen(true);
     } catch (error) {
-      toast.error('Error de conexión', { description: 'No se pudo conectar con el servidor' + error });
+      toast.error('Error de conexión', { description: 'No se pudo conectar con el servidor ' + error });
     } finally {
       setIsLoading(false);
     }
@@ -199,7 +210,7 @@ function CitasPage() {
     '2025-01-01', // Año Nuevo
     '2025-04-11', // Jueves Santo
     '2025-04-12', // Viernes Santo
-    
+
     // Agrega otros días feriados según necesites
   ];
 
@@ -251,7 +262,7 @@ function CitasPage() {
                       type={type}
                       selected={selectedType?.id === type.id}
                       onClick={() => {
-                        setSelectedType({id: type.id, name: type.name});
+                        setSelectedType({ id: type.id, name: type.name });
                         scrollAfterTypeSelection("dateForm");
                       }}
                     />
@@ -288,7 +299,7 @@ function CitasPage() {
                       }}
                       holidays={holidays}
                       required={true}
-                      
+
                     />
                   </div>
 
@@ -345,6 +356,21 @@ function CitasPage() {
                     </div>
                     <div>
                       <label className="block text-gray-900 mb-2">
+                        Número de cédula
+                      </label>
+                      <input
+                        type="text"
+                        pattern="\d{1,9}-?\d{1,6}-?\d{1,6}"
+                        value={formData.cedula}
+                        onChange={(e) => setFormData({ ...formData, cedula: e.target.value })}
+                        className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
+                      
+                        required
+                      />
+                      
+                    </div>
+                    <div>
+                      <label className="block text-gray-900 mb-2">
                         Correo Electrónico
                       </label>
                       <input
@@ -384,6 +410,12 @@ function CitasPage() {
               )}
 
             </form>
+            <NotificationModal
+              open={notificationOpen}
+              onClose={() => setNotificationOpen(false)}
+              title={notificationTitle}
+              message={notificationMessage}
+            />
           </motion.div>
         </div>
       </section>

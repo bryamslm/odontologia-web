@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
                     }else if(message.button?.text){
                         const button = message.button.text;
                         console.log('📩 Mensaje de botón:', button);
+                        console.log('==> ID MENSAJE QUE SE RESPONDE:', message.from, ' = ', message.from[0]);
                     }
                 }
                 console.log('📩 Cambio: ', change);
