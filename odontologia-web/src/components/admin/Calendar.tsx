@@ -25,7 +25,8 @@ export default function CitasCalendar({ citas, selectedDate, onDateChange }: Cit
       <CalendarLib
         value={selectedDate}
         onChange={(date) => onDateChange(date as Date)}
-        onViewChange={({ view }) => setView(view as any)}
+        onViewChange={({ view }) => setView(view as 'month' | 'year' | 'decade')}
+        view={view} // 'month' | 'year' | 'decade'
         tileClassName={({ date }) =>
           dateHasCitas(date) ? 'bg-blue-20 border-2 border-blue-200 ' : ''
         }

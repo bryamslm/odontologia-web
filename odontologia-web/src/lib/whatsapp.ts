@@ -69,7 +69,7 @@ export const sendWhatsAppMessageAPI = async (
     try {
 
         const saveMessageId = async (messageId: string) => {
-            const { data: dataUpdate, error } = await supabase.from('citas').update({
+            const { error } = await supabase.from('citas').update({
                 whatsapp_message_id: messageId
             }).eq('numero', parameters[6]);
             if (error) {

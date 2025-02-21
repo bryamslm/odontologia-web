@@ -10,7 +10,7 @@ const URL_REPROGRAMAR_PRE = process.env.URL_REPROGRAM;
 
 
 //GET para obtener citas
-export async function GET(req: NextRequest) {
+export async function GET() {
     const { data, error } = await supabase.from("citas").select("*");
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
@@ -228,7 +228,7 @@ export async function POST(req: NextRequest) {
             //objeto con lista clave valor
             const numeroCita = data[0].numero.toString();
             const parameters = [fechaFormat, hora, tipo.name, nombre, correo, telefono, numeroCita, cedula, urlReprogramar];
-            const res = await sendWhatsAppMessageAPI("50662633553", "nueva_cita_3", parameters);
+            await sendWhatsAppMessageAPI("50662633553", "nueva_cita_3", parameters);
             //const res = await sendWhatsAppMessage(nombre, tipo, fechaFormat, hora, correo, telefono);
             
         }

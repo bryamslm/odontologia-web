@@ -2,7 +2,6 @@
 'use client'
 import { useReactTable, createColumnHelper, flexRender, getCoreRowModel } from '@tanstack/react-table'
 import { Cita } from '@/types/types'
-import { Clock, User, Stethoscope } from 'lucide-react'
 
 const columnHelper = createColumnHelper<Cita>()
 

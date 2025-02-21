@@ -158,7 +158,6 @@ export default function RechazarCitaUI({ cita }: { cita: Cita }) {
 
     if (errorCancel) throw errorCancel;
     
-    const fechaFormat = new Date(new Date(cita.fecha_cita).setHours(24)).toLocaleDateString('es-CR').split('T')[0];
     // Enviar email de cancelación
     await fetch('/api/send-email', {
       method: 'POST',
@@ -261,7 +260,7 @@ export default function RechazarCitaUI({ cita }: { cita: Cita }) {
 
     if (error) throw error;
     // Enviar email de confirmación
-    const fechaFormat = new Date(new Date(cita.fecha_cita).setHours(24)).toLocaleDateString('es-CR').split('T')[0];
+    
     await fetch('/api/send-email', {
       method: 'POST',
       body: JSON.stringify({
