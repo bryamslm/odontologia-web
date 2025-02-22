@@ -109,4 +109,6 @@ const Header = memo(function Header({
   );
 });
 
+Header.displayName = "Header";
+
 export default Header;

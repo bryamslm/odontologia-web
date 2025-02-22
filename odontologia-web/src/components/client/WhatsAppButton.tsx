@@ -18,4 +18,6 @@ const WhatsAppButton = memo(() => (
   </Link>
 ));
 
+WhatsAppButton.displayName = "WhatsAppButton";
+
 export default WhatsAppButton;

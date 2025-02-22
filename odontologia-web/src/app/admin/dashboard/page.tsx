@@ -1,7 +1,7 @@
 // app/admin/dashboard/page.tsx
 'use client'
 import { useEffect, useState } from 'react'
-import { Calendar, MoreVertical, User, Clock, Stethoscope } from 'lucide-react'
+import { User, Clock, Stethoscope } from 'lucide-react'
 import { Cita } from '@/types/types'
 import CitasCalendar from '@/components/admin/Calendar'
 import DataTable from '@/components/admin/DataTable'
