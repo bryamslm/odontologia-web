@@ -23,7 +23,7 @@ async function getCita(id: string) {
 function AdminHeader() {
     return (
       <header className="bg-transparent shadow p-4 flex justify-between items-center">
-        <div className="text-2xl font-bold text-blue-500">FlowDent</div>
+        <div className="text-2xl font-bold text-blue-500">FlowDental</div>
         <Link href="/admin/dashboard" className="text-blue-500 hover:underline">
           Panel Admin
         </Link>

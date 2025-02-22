@@ -27,7 +27,7 @@ export interface Cita {
 
 export default function RechazarCitaUI({ cita }: { cita: Cita }) {
   const [action, setAction] = useState<'confirm' | 'cancel' | 'reschedule' | null>(null);
-  const [confirmUsed, setConfirmUsed] = useState<boolean>(cita.estado === 'Confirmada' ? true : cita.estado === 'Cancelada' ? true : false);
+  const [confirmUsed, setConfirmUsed] = useState<boolean>(cita.estado === 'Confirmada' ? true : cita.estado === 'Cancelada' ? true : cita.estado == 'Reprogramada' ? true : false);
   const [cancelUsed, setCancelUsed] = useState<boolean>(cita.estado === 'Cancelada' ? true : false);
   const [rescheduleUsed, setRescheduleUsed] = useState<boolean>(cita.estado === 'Cancelada' ? true : false);
   const [motivoCancel, setMotivoCancel] = useState<string | undefined>(undefined);
@@ -59,7 +59,7 @@ export default function RechazarCitaUI({ cita }: { cita: Cita }) {
       method: 'POST',
       body: JSON.stringify({
         to: cita.correo_paciente,
-        subject: 'Cita Reprogramada',
+        subject: 'Cita Reprogramada - FlowDental',
         htmlContent: `
 <!DOCTYPE html>
 <html>
@@ -131,9 +131,10 @@ export default function RechazarCitaUI({ cita }: { cita: Cita }) {
 `
       })
     });
+    setRescheduleUsed(true);
+    setState('Reprogramada');
     cita.estado = 'Reprogramada';
     toast.success('Cita reprogramada exitosamente', { description: 'Se ha notificado al paciente, el mismo podrá cancelar o proponer reprogramar la cita', duration: 5000 });
-    setRescheduleUsed(true);
     setAction(null);
   };
 
@@ -186,8 +187,8 @@ export default function RechazarCitaUI({ cita }: { cita: Cita }) {
         </div>
         
         <div class="content">
-            <h2 style="color: #2d3748;">Solicitud de Cita No Aprobada</h2>
-            <p style="color: #4a5568;">Lamentablemente, la clínica no puede atender la solicitud de cita de <strong>${cita.nombre_paciente}</strong> en la fecha y hora propuestas.</p>
+            <h2 style="color: #2d3748;">Tu Cita ha sido cancelada</h2>
+            <p style="color: #4a5568;">Lamentablemente, la clínica no puede atender la cita de <strong>${cita.nombre_paciente}</strong> en la fecha y hora propuestas.</p>
             
             <table class="details">
                 <tr>
@@ -416,7 +417,7 @@ export default function RechazarCitaUI({ cita }: { cita: Cita }) {
                   className="w-full sm:w-auto"
                   disabled={confirmUsed || rescheduleUsed}
                 >
-                  ✅ Confirmar Cita
+                Confirmar Cita
                 </Button>
               
 
@@ -426,16 +427,17 @@ export default function RechazarCitaUI({ cita }: { cita: Cita }) {
                   className="w-full sm:w-auto"
                   disabled={cancelUsed}
                 >
-                  ❌ Cancelar Cita
+                Cancelar Cita
                 </Button>
 
               <Button
-                variant="back"
+                variant="secondary"
                 onClick={() => setAction("reschedule")}
                 className="w-full sm:w-auto"
+                disabled={cancelUsed}
                 
               >
-                🔄 Reprogramar
+              Reprogramar
               </Button>
             </div>
           </div>

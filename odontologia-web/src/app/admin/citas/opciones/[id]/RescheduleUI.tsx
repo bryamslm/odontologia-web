@@ -1,7 +1,7 @@
 // RescheduleUI.tsx (Componente cliente nuevo)
 "use client";
 import React, { useState } from 'react';
-import { TimeSlots } from '@/components/citas/timeSlots';
+import { TimeSlots } from '@/components/client/citas/timeSlots';
 import Calendar from '@/components/ui/Calendar'; // Asumiendo que tienes un componente Calendar
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -126,7 +126,7 @@ export const RescheduleUI = ({ cita, onConfirm, setAction }: {
       )}
 
       {/* Acciones */}
-      <div className="flex gap-4 justify-end">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
         <Button
           variant="secondary"
           onClick={() => {
@@ -143,12 +143,12 @@ export const RescheduleUI = ({ cita, onConfirm, setAction }: {
           disabled={!selectedDate || !selectedTime || loading}
           variant={loading ? 'default' : 'confirm'}
         >
-          {loading ? 'Procesando...' : 'Confirmar Reprogramación'}
+          {loading ? 'Procesando...' : 'Reprogramar'}
         </Button>
         {/* back button */}
         <Button
           onClick={() => setAction(null)}
-          variant="secondary"
+          variant="back"
         >
           Regresar  
         </Button>

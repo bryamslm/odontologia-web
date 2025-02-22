@@ -9,18 +9,18 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-slate-800 text-white hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200",
+        default: "bg-slate-800 text-white  rounded-full hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200",
         destructive:
-          "bg-red-500 text-slate-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90",
+          "bg-red-500 text-slate-50  rounded-full hover:bg-red-500/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90",
         outline:
-          "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+          "border border-slate-200 bg-white  rounded-full hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         secondary:
-          "bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
+          "bg-cyan-700 text-slate-50  rounded-full hover:bg-cyan-800 dark:bg-cyan-700 dark:text-slate-50 dark:hover:bg-cyan-800",
         ghost: "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
-        link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
-        confirm: "bg-blue-500 text-slate-50 hover:bg-blue-600 dark:bg-blue-500 dark:text-slate-50 dark:hover:bg-blue-600",
-        cancel: "bg-red-500 text-slate-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90",
-        back: "bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
+        link: "text-slate-900 underline-offset-4  rounded-full hover:underline dark:text-slate-50",
+        confirm: "bg-blue-500 text-slate-50  rounded-full hover:bg-blue-600 dark:bg-blue-500 dark:text-slate-50 dark:hover:bg-blue-600",
+        cancel: "bg-rose-500 text-slate-50  rounded-full hover:bg-rose-500/90 dark:bg-rose-500 dark:text-slate-50 dark:hover:bg-rose-900/90",
+        back: "bg-gray-500 text-slate-50  rounded-full hover:bg-gray-600 dark:bg-gray-500 dark:text-slate-50 dark:hover:bg-gray-600",
       },
       size: {
         default: "h-10 px-4 py-2",

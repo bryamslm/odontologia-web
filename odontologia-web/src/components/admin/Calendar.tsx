@@ -55,7 +55,7 @@ export default function CitasCalendar({ citas, selectedDate, onDateChange }: Cit
               <div className="flex justify-between items-center">
                 <div>
                   <p className="font-medium">{cita.nombre_paciente}</p>
-                  <p className="text-sm text-gray-600">{cita.tipo_cita} - {cita.hora_cita.slice(0, 5)}</p>
+                  <p className="text-sm text-gray-600">#{cita.numero} {cita.tipo_cita} - {cita.hora_cita.slice(0, 5)}</p>
                 </div>
                 <span className={`px-3 py-1 rounded-full text-sm ${cita.estado === 'Solicitada' ? 'bg-yellow-100 text-yellow-800' :
                     cita.estado === 'Cancelada' ? 'bg-red-100 text-red-800' :

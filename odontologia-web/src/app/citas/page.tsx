@@ -5,9 +5,9 @@ import { Toaster, toast } from 'sonner';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Header } from '@/components/citas/header';
-import { Footer } from '@/components/citas/footer';
-import { TimeSlots } from '@/components/citas/timeSlots';
+import { Header } from '@/components/client/citas/Header';
+import { Footer } from '@/components/client/citas/footer';
+import { TimeSlots } from '@/components/client/citas/timeSlots';
 import Calendar from '@/components/ui/Calendar';
 import NotificationModal from '@/components/ui/NotificationModal';
 import { format, parseISO } from 'date-fns';
@@ -63,13 +63,6 @@ const APPOINTMENT_TYPES = [
     description: 'Tratamiento estético profesional en consultorio',
     icon: <div className="text-2xl mx-auto">🦷</div>, // Brillo
     price: '₡ 60 000'
-  },
-  {
-    id: 'urgencias',
-    name: 'Urgencias Dentales',
-    description: 'Atención inmediata para casos de emergencia',
-    icon: <div className="text-2xl mx-auto">🦷</div>, // Alerta
-    price: '₡ 45 000'
   }
 ];
 
@@ -130,6 +123,7 @@ function CitasPage() {
     setSelectedDate(undefined);
     setSelectedTime(null);
     setFormData({ nombre: '', cedula: '', correo: '', telefono: '' });
+    scrollToSection("reservar");
   }
 
   const scrollToSection = (sectionId: string) => {
@@ -156,7 +150,7 @@ function CitasPage() {
     console.log("Form Data: ", formData);
     console.log("Fecha for db: ", selectedDateObj);
     console.log("Fecha for ui: ", selectedDate);
-    console.log("Time for db: ",  selectedTime);
+    console.log("Time for db: ", selectedTime);
     setIsLoading(true);  // Se inicia el estado de carga
 
     try {
@@ -175,7 +169,7 @@ function CitasPage() {
       if (res.ok) {
         setNotificationTitle("Cita Solicitada Con Éxito");
         setNotificationMessage(
-`Se ha solicitado tu cita para el día ${format(selectedDateObj ? selectedDateObj : parseISO(new Date().toString()), "PPPP", { locale: es })} a las ${selectedTime}.
+          `Se ha solicitado tu cita para el día ${format(selectedDateObj ? selectedDateObj : parseISO(new Date().toString()), "PPPP", { locale: es })} a las ${selectedTime}.
 Se te ha notificado vía correo (${formData.correo}) sobre tu solucitud.
           
 ¡Gracias por confiar en nosotros!`
@@ -251,7 +245,7 @@ Se te ha notificado vía correo (${formData.correo}) sobre tu solucitud.
             transition={{ duration: 0.5 }}
             className="bg-gray-50 p-8 rounded-2xl shadow-lg"
           >
-            <h2 className="text-3xl font-bold text-blue-900 mb-6 text-center">Reserva tu Cita</h2>
+            <h2 className="text-3xl font-bold text-blue-500  mb-6 text-center">Reserva tu Cita</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-gray-900">Elige un Servicio</h3>
@@ -364,10 +358,10 @@ Se te ha notificado vía correo (${formData.correo}) sobre tu solucitud.
                         value={formData.cedula}
                         onChange={(e) => setFormData({ ...formData, cedula: e.target.value })}
                         className="w-full p-3 border-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-black"
-                      
+
                         required
                       />
-                      
+
                     </div>
                     <div>
                       <label className="block text-gray-900 mb-2">
@@ -393,19 +387,40 @@ Se te ha notificado vía correo (${formData.correo}) sobre tu solucitud.
                       />
                     </div>
 
-                    <button
-                      type="submit"
-                      className={` text-white px-8 py-3 rounded-full 
+                    <div className="grid grid-cols-2 gap-4">
+                      <button
+                        type="submit"
+                        className={` text-white px-8 py-3 rounded-full 
                     transition-colors shadow-lg  
                     ${isLoading
-                          ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-blue-500 hover:bg-blue-600"
-                        }`}
-                      disabled={isLoading}
-                    >
-                      {isLoading ? 'Reservando...' : 'Confirmar Reserva'} {/* Muestra texto diferente mientras carga */}
-                    </button>
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-blue-500 hover:bg-blue-600"
+                          }`}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Reservando...' : 'Confirmar Reserva'} {/* Muestra texto diferente mientras carga */}
+                      </button>
+                      <button
+
+                        className={` text-white px-8 py-3 rounded-full 
+                    transition-colors shadow-lg  
+                    ${isLoading
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-cyan-700 text-slate-50 hover:bg-cyan-800 dark:bg-cyan-700 dark:text-slate-50 dark:hover:bg-cyan-800"
+                          }`}
+                        onClick={(e) => {
+                          e.preventDefault();                          
+                          resetForm();
+                         
+                        }
+                        }
+                        disabled={isLoading}
+                      >
+                        Reiniciar {/* Muestra texto diferente mientras carga */}
+                      </button>
+                    </div>
                   </div>
+
                 </motion.div>
               )}
 

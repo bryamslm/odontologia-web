@@ -12,6 +12,7 @@ export interface Cita {
     estado?: 'Solicitada' | 'Confirmada' | 'Completada' | 'Cancelada' | 'Reprogramada';
     notas?: string;
     whatsapp_message_id?: string;
+    numero: number;
   }
   
   export interface Paciente {

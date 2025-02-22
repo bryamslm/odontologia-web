@@ -10,6 +10,7 @@ export default function DashboardPage() {
   const [citas, setCitas] = useState<Cita[] | []>([])
   const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [view, setView] = useState<'calendar' | 'list'>('calendar')
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const fetchCitas = async () => {
@@ -22,7 +23,10 @@ export default function DashboardPage() {
         console.error('Error fetching citas:', error)
       }
     }
-    fetchCitas()
+    fetchCitas();
+    const handleScroll = () => setIsScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [])
 
   const stats = [
@@ -47,22 +51,30 @@ export default function DashboardPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-gray-900">Panel Administrativo</h1>
+    <main className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
+      <header className={`fixed w-full transition-all duration-300 z-50 
+      ${isScrolled ? "bg-white/95 shadow-md" : "bg-transparent"
+        }`}>
+        <div className="max-w-7xl mx-auto px-0 flex justify-between items-center h-16">
+          <h1 className="text-xl font-semibold text-blue-500">FlowDental Admin</h1>
           <div className="flex items-center space-x-4">
-            <button onClick={() => setView('calendar')} className={`p-2 rounded ${view === 'calendar' ? 'bg-blue-100' : ''}`}>
-              <Calendar className="text-blue-600" />
-            </button>
-            <button onClick={() => setView('list')} className={`p-2 rounded ${view === 'list' ? 'bg-blue-100' : ''}`}>
-              <MoreVertical className="text-blue-600" />
-            </button>
+          <button
+        onClick={() => setView('calendar')}
+        className={`p-2 rounded ${view === 'calendar' ? 'bg-blue-100' : ''}`}
+      >
+        <span className="text-blue-600">Calendario</span>
+      </button>
+      <button
+        onClick={() => setView('list')}
+        className={`p-2 rounded ${view === 'list' ? 'bg-blue-100' : ''}`}
+      >
+        <span className="text-blue-600">Lista</span>
+      </button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="max-w-7xl mx-auto px-4 pt-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {stats.map((stat, index) => (
             <div key={index} className={`${stat.color} p-6 rounded-lg shadow-sm`}>
@@ -85,6 +97,6 @@ export default function DashboardPage() {
           <DataTable citas={citas} />
         )}
       </div>
-    </div>
+    </main>
   )
 }
