@@ -32,7 +32,7 @@ export default function CitasCalendar({ citas, selectedDate, onDateChange }: Cit
         }
         tileContent={({ date }) => {
           const dailyCitas = citas.filter(c =>
-            new Date(new Date(c.fecha_cita).setHours(24)).toDateString() === date.toDateString() && c.estado !== 'Cancelada')
+            new Date(new Date(c.fecha_cita).setHours(24)).toDateString() === date.toDateString())
           return dailyCitas.length > 0 ? (
             <div className="text-left text-xs text-blue-800 m-0 p-0 ">
               {dailyCitas.length} cita{dailyCitas.length > 1 ? 's' : ''}
@@ -45,21 +45,25 @@ export default function CitasCalendar({ citas, selectedDate, onDateChange }: Cit
         <h3 className="text-lg font-semibold mb-4">
           Citas para el {selectedDate.toLocaleDateString('es-CR', { weekday: 'long', day: 'numeric', month: 'long' })}
         </h3>
-        {citas.filter(c => new Date(new Date(c.fecha_cita).setHours(24)).toDateString() === selectedDate.toDateString() && c.estado !== 'Cancelada')
+        {citas.filter(c => new Date(new Date(c.fecha_cita).setHours(24)).toDateString() === selectedDate.toDateString())
           .map(cita => (
-            <div key={cita.id} className={`p-4 mb-3 border-l-4 ${cita.estado === 'Solicitada' ? 'border-yellow-400' :
-              cita.estado === 'Cancelada' ? 'border-red-400' :
-                 cita.estado === 'Confirmada' ? 'border-blue-400' :
-                  'border-gray-400'
+            <div key={cita.id} className={`p-4 mb-3 border-l-4 ${cita.estado === 'Solicitada' ? 'border-yellow-100' :
+              cita.estado === 'Cancelada' ? 'border-red-100' :
+                 cita.estado === 'Confirmada' ? 'border-blue-100' :
+                 cita.estado === 'Reprogramada' ? 'border-cyan-100' :
+                  cita.estado === 'Completada' ? 'border-green-100':
+                  'border-gray-100'
             } bg-gray-50 rounded`}>
               <div className="flex justify-between items-center">
                 <div>
                   <p className="font-medium">{cita.nombre_paciente}</p>
                   <p className="text-sm text-gray-600">#{cita.numero} {cita.tipo_cita} - {cita.hora_cita.slice(0, 5)}</p>
                 </div>
-                <span className={`px-3 py-1 rounded-full text-sm ${cita.estado === 'Solicitada' ? 'bg-yellow-100 text-yellow-800' :
-                    cita.estado === 'Cancelada' ? 'bg-red-100 text-red-800' :
-                      cita.estado === 'Confirmada' ? 'bg-blue-100 text-blue-800' :
+                <span className={`px-3 py-1 rounded-full text-sm ${cita.estado === 'Solicitada' ? 'bg-yellow-100' :
+                    cita.estado === 'Cancelada' ? 'bg-red-100' :
+                      cita.estado === 'Confirmada' ? 'bg-blue-100' :
+                      cita.estado === 'Reprogramada' ? 'bg-cyan-100' :
+                      cita.estado === 'Completada' ? 'bg-green-100 text-gray-800':
                         'bg-gray-100 text-gray-800'
                   }`}>
                   {cita.estado}

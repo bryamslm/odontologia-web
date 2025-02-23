@@ -24,11 +24,12 @@ export default function DataTable({ citas }: { citas: Cita[] }) {
       header: 'Estado',
       cell: info => (
         <span className={`px-3 py-1 rounded-full text-sm ${
-          info.getValue() === 'Confirmada' ? 'bg-green-100 text-green-800' :
-          info.getValue() === 'Solicitada' ? 'bg-yellow-100 text-yellow-800' :
-          info.getValue() === 'Cancelada' ? 'bg-red-100 text-red-800' :
-          info.getValue() === 'Reprogramada' ? 'bg-slate-100 text-blue-800' :
-          'bg-gray-100 text-gray-800'
+          info.getValue() === 'Confirmada' ? 'bg-blue-100' :
+          info.getValue() === 'Solicitada' ? 'bg-yellow-100' :
+          info.getValue() === 'Cancelada' ? 'bg-red-100 ' :
+          info.getValue() === 'Reprogramada' ? 'bg-cyan-100 ' :
+          info.getValue() === 'Completada' ? 'bg-green-100':
+          'bg-gray-100'
         }`}>
           {info.getValue()}
         </span>

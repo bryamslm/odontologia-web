@@ -389,6 +389,24 @@ Se te ha notificado vía correo (${formData.correo}) sobre tu solucitud.
 
                     <div className="grid grid-cols-2 gap-4">
                       <button
+
+                        className={` text-white px-8 py-3 rounded-full 
+transition-colors shadow-lg  
+${isLoading
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-cyan-700 text-slate-50 hover:bg-cyan-800 dark:bg-cyan-700 dark:text-slate-50 dark:hover:bg-cyan-800"
+                          }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          resetForm();
+
+                        }
+                        }
+                        disabled={isLoading}
+                      >
+                        Reiniciar {/* Muestra texto diferente mientras carga */}
+                      </button>
+                      <button
                         type="submit"
                         className={` text-white px-8 py-3 rounded-full 
                     transition-colors shadow-lg  
@@ -400,24 +418,7 @@ Se te ha notificado vía correo (${formData.correo}) sobre tu solucitud.
                       >
                         {isLoading ? 'Reservando...' : 'Confirmar Reserva'} {/* Muestra texto diferente mientras carga */}
                       </button>
-                      <button
 
-                        className={` text-white px-8 py-3 rounded-full 
-                    transition-colors shadow-lg  
-                    ${isLoading
-                            ? "bg-gray-400 cursor-not-allowed"
-                            : "bg-cyan-700 text-slate-50 hover:bg-cyan-800 dark:bg-cyan-700 dark:text-slate-50 dark:hover:bg-cyan-800"
-                          }`}
-                        onClick={(e) => {
-                          e.preventDefault();                          
-                          resetForm();
-                         
-                        }
-                        }
-                        disabled={isLoading}
-                      >
-                        Reiniciar {/* Muestra texto diferente mientras carga */}
-                      </button>
                     </div>
                   </div>
 
