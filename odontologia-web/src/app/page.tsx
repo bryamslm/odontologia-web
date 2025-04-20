@@ -17,32 +17,32 @@ export default async function Page() {
       {
         title: "Limpieza Dental Profesional",
         description: "Mantén tu sonrisa radiante y saludable",
-        icon: "🦷", // Emoji de diente
+       
       },
       {
         title: "Blanqueamiento Dental",
         description: "Recupera el brillo natural de tus dientes",
-        icon: "✨", // Emoji de brillo
+        
       },
       {
         title: "Ortodoncia Preventiva",
         description: "Tratamientos personalizados para cada paciente",
-        icon: "🦿", // Emoji de brackets (alternativa)
+       
       },
       {
         title: "Tratamiento de Caries",
         description: "Restauraciones estéticas y duraderas",
-        icon: "🔧", // Emoji de herramienta (representa reparación)
+       
       },
       {
         title: "Extracciones Dentales",
         description: "Procedimientos seguros y sin dolor",
-        icon: "🪛", // Emoji de extracción (alternativa)
+        
       },
       {
         title: "Prótesis Dentales",
         description: "Coronas, puentes y prótesis removibles",
-        icon: "👑", // Emoji de corona
+       
       }
     ];
 

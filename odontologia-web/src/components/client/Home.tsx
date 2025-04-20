@@ -14,7 +14,7 @@ import { Phone, Clock, MapPin } from "lucide-react";
 interface Service {
     title: string;
     description: string;
-    icon: string;
+
 }
 
 export default function Home({ services }: { services: Service[] }) {
@@ -64,28 +64,29 @@ export default function Home({ services }: { services: Service[] }) {
                     transition={{ duration: 0.5 }}
                     className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center"
                 >
-                    <div className="text-center md:text-left">
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+                    <div className="">
+                        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 text-center md:text-start" 
+                            >
                             Tu sonrisa merece la mejor atención
                         </h1>
-                        <p className="text-lg text-gray-800 mb-8">
+                        <p className="text-lg text-gray-800 mb-8 text-justify hyphens-auto">
                             Con FlowDental, tu salud dental está en las mejores manos.
                             Experimenta una atención personalizada y resultados excepcionales.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-6 justify-center md:justify-start">
+                        <div className="flex flex-col sm:flex-row gap-6 text-center justify-center md:justify-start">
                             <Link
                                 href="/citas"
                                 className="bg-blue-500 text-gray-800 px-8 py-3 rounded-full hover:bg-blue-600 transition-colors shadow-lg"
                                 prefetch={false}
                             >
-                                Reservar Cita
+                                <strong>Reservar Cita</strong>
                             </Link>
                             <button
                                 onClick={() => scrollToSection("sobre-nosotros")}
                                 className="bg-white text-rose-500 px-8 py-3 rounded-full border-2 border-rose-500 hover:bg-rose-50 transition-colors"
                                 aria-label="Conoce más"
                             >
-                                Conoce más
+                                <strong>Conoce más</strong>
                             </button>
                         </div>
                     </div>
@@ -112,11 +113,12 @@ export default function Home({ services }: { services: Service[] }) {
                 <div className="max-w-7xl mx-auto">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div className="space-y-6">
-                            <h2 className="text-3xl font-bold text-gray-800">
+                            <h2 className="text-3xl font-bold text-gray-800 text-justify hyphens-auto" 
+                            >
                                 Experiencia y Compromiso con tu Salud Dental
                             </h2>
                             <div className="prose prose-lg text-gray-600">
-                                <p>
+                                <p className="text-justify hyphens-auto">
                                     FlowBiz Dental cuenta con más de 5 años de experiencia
                                     en odontología general y estética. Su compromiso con la
                                     excelencia y la atención personalizada la han convertido
@@ -190,10 +192,10 @@ export default function Home({ services }: { services: Service[] }) {
                                 key={service.title}
                                 className="bg-blue-100 p-6 rounded-xl hover:shadow-lg transition-shadow"
                             >
-                                <h3 className="text-xl text-black font-semibold mb-2">
-                                    {service.icon} {service.title}
+                                <h3 className="text-xl text-black font-semibold mb-2 text-center">
+                                    {service.title}
                                 </h3>
-                                <p className="text-gray-600">{service.description}</p>
+                                <p className="text-gray-600 text-center">{service.description}</p>
                             </div>
                         ))}
                     </div>
@@ -209,7 +211,7 @@ export default function Home({ services }: { services: Service[] }) {
                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
                             <div className="text-blue-500 mb-4">★★★★★</div>
-                            <p className="text-gray-600 mb-4">
+                            <p className="text-gray-600 mb-4 text-justify hyphens-auto">
                                 &quot;Nunca había tenido una experiencia dental tan
                                 reconfortante. FlowDental no solo fue extremadamente
                                 profesional, sino también muy empática...&quot;
@@ -221,7 +223,7 @@ export default function Home({ services }: { services: Service[] }) {
                         </div>
                         <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
                             <div className="text-blue-500 mb-4">★★★★★</div>
-                            <p className="text-gray-600 mb-4">
+                            <p className="text-gray-600 mb-4 text-justify hyphens-auto">
                                 &quot;Como alguien con miedo al dentista, encontrar a
                                 FlowDental fue un verdadero alivio...&quot;
                             </p>
@@ -230,12 +232,12 @@ export default function Home({ services }: { services: Service[] }) {
                         </div>
                         <div className="bg-blue-100 p-6 rounded-xl shadow-sm">
                             <div className="text-blue-500 mb-4">★★★★★</div>
-                            <p className="text-gray-600 mb-4">
+                            <p className="text-gray-600 mb-4 text-justify hyphens-auto">
                                 &quot;Llegué con un problema de caries que me preocupaba mucho.
                                 FlowDental no solo trató el problema de manera eficiente...&quot;
                             </p>
                             <p className="font-medium text-black">Sofía Guzmán</p>
-                            <p className="text-sm text-gray-500">Tratamiento de Caries</p>
+                            <p className="text-sm text-gray-500 ">Tratamiento de Caries</p>
                         </div>
                     </div>
                 </div>
